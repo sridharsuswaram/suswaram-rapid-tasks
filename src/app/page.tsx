@@ -1,0 +1,206 @@
+"use client";
+
+import { AnimatePresence, motion } from "framer-motion";
+import { Inbox, ListChecks, Settings } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
+import { LiveClock } from "@/components/home/live-clock";
+import { MicButton } from "@/components/home/mic-button";
+import { WaveformBars } from "@/components/home/waveform-bars";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { useVoiceLanguage } from "@/hooks/use-voice-language";
+import { useVoiceRecorder } from "@/hooks/use-voice-recorder";
+import { formatDuration, getQuoteOfTheDay } from "@/lib/utils";
+import { createDumpTask, updateTask } from "@/services/tasksService";
+import type { Task } from "@/types/task";
+
+export default function HomePage() {
+  const { language } = useVoiceLanguage();
+  const voice = useVoiceRecorder({ lang: language });
+  const [savedTask, setSavedTask] = useState<Task | null>(null);
+  const [manualText, setManualText] = useState("");
+  const [saving, setSaving] = useState(false);
+  const wasRecording = useRef(false);
+  const quote = useMemo(() => getQuoteOfTheDay(), []);
+
+  useEffect(() => {
+    if (wasRecording.current && !voice.isRecording) {
+      const text = voice.transcript.trim();
+      if (text) {
+        // Reacting to the recorder's isRecording flag flipping false (an
+        // external hook's state), not deriving local render state.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setSaving(true);
+        createDumpTask({ voice_transcript: text })
+          .then((task) => {
+            setSavedTask(task);
+            toast.success("Task Saved Successfully");
+            voice.reset();
+          })
+          .catch((err) => {
+            toast.error(err instanceof Error ? err.message : "Failed to save task");
+          })
+          .finally(() => setSaving(false));
+      }
+    }
+    wasRecording.current = voice.isRecording;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voice.isRecording]);
+
+  function handleMicClick() {
+    if (!voice.isRecording) setSavedTask(null);
+    voice.toggle();
+  }
+
+  async function handleTranscriptBlur() {
+    if (!savedTask) return;
+    try {
+      await updateTask(savedTask.id, {
+        voice_transcript: savedTask.voice_transcript,
+        title: savedTask.voice_transcript.slice(0, 80),
+      });
+    } catch {
+      toast.error("Couldn't save your edit");
+    }
+  }
+
+  async function handleManualSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const text = manualText.trim();
+    if (!text) return;
+    setSaving(true);
+    try {
+      const task = await createDumpTask({ voice_transcript: text, source: "manual" });
+      setSavedTask(task);
+      setManualText("");
+      toast.success("Task Saved Successfully");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to save task");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <main className="flex min-h-dvh flex-1 flex-col bg-background">
+      <header className="flex h-14 shrink-0 items-center justify-between px-4">
+        <div className="flex items-center gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Task Dump"
+            nativeButton={false}
+            render={
+              <Link href="/dump">
+                <Inbox />
+              </Link>
+            }
+          />
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Settings"
+            nativeButton={false}
+            render={
+              <Link href="/settings">
+                <Settings />
+              </Link>
+            }
+          />
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          aria-label="Today's Tasks"
+          nativeButton={false}
+          render={
+            <Link href="/today">
+              <ListChecks />
+            </Link>
+          }
+        />
+      </header>
+
+      <div className="flex flex-1 flex-col items-center justify-center gap-8 px-6 pb-16">
+        <LiveClock />
+
+        <div className="flex flex-col items-center gap-4">
+          <MicButton isRecording={voice.isRecording} onClick={handleMicClick} disabled={saving} />
+
+          <div className="flex h-8 flex-col items-center justify-center">
+            {voice.isRecording && (
+              <div className="flex items-center gap-3">
+                <WaveformBars active />
+                <span className="text-sm font-medium tabular-nums text-muted-foreground">
+                  {formatDuration(voice.elapsedSeconds)}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {voice.isRecording && voice.transcript && (
+          <p className="max-w-md text-center text-sm text-muted-foreground">{voice.transcript}</p>
+        )}
+
+        {voice.error && <p className="text-sm text-destructive">{voice.error}</p>}
+
+        {!voice.isSupported && (
+          <form onSubmit={handleManualSubmit} className="w-full max-w-md space-y-3">
+            <p className="text-center text-sm text-muted-foreground">
+              Voice input isn&apos;t supported in this browser — type your thought instead.
+            </p>
+            <Textarea
+              value={manualText}
+              onChange={(e) => setManualText(e.target.value)}
+              placeholder="What's on your mind?"
+              className="min-h-24 rounded-2xl bg-card shadow-soft"
+            />
+            <Button type="submit" className="w-full" disabled={saving || !manualText.trim()}>
+              Save to Dump
+            </Button>
+          </form>
+        )}
+
+        <AnimatePresence mode="wait">
+          {savedTask && !voice.isRecording && (
+            <motion.div
+              key="saved"
+              initial={{ opacity: 0, y: 8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="w-full max-w-md space-y-2 rounded-2xl bg-card p-4 shadow-soft"
+            >
+              <p className="text-xs font-medium text-muted-foreground">Just saved</p>
+              <Textarea
+                value={savedTask.voice_transcript}
+                onChange={(e) => setSavedTask({ ...savedTask, voice_transcript: e.target.value })}
+                onBlur={handleTranscriptBlur}
+                className="min-h-16 resize-none border-none bg-transparent p-0 shadow-none focus-visible:ring-0"
+              />
+              <Link href="/dump" className="text-xs font-medium text-primary hover:underline">
+                View in Task Dump →
+              </Link>
+            </motion.div>
+          )}
+
+          {!voice.isRecording && !savedTask && (
+            <motion.p
+              key="quote"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="max-w-xs text-center text-sm text-muted-foreground italic"
+            >
+              {quote}
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </div>
+    </main>
+  );
+}
