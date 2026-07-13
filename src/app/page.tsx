@@ -9,6 +9,7 @@ import { DumpShortcut } from "@/components/home/dump-shortcut";
 import { LiveClock } from "@/components/home/live-clock";
 import { MicButton } from "@/components/home/mic-button";
 import { WaveformBars } from "@/components/home/waveform-bars";
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useVoiceLanguage } from "@/hooks/use-voice-language";
@@ -86,7 +87,7 @@ export default function HomePage() {
 
   return (
     <main className="flex min-h-dvh flex-1 flex-col bg-background">
-      <header className="flex h-14 shrink-0 items-center justify-between px-4">
+      <header className="relative flex h-14 shrink-0 items-center justify-between px-4">
         <div className="flex items-center gap-1">
           <Button
             variant="ghost"
@@ -111,6 +112,11 @@ export default function HomePage() {
             }
           />
         </div>
+        <Logo
+          className="absolute left-1/2 -translate-x-1/2"
+          markClassName="h-6 w-auto"
+          wordmarkClassName="text-lg"
+        />
         <Button
           variant="ghost"
           size="icon"

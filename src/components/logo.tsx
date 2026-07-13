@@ -34,15 +34,23 @@ export function LogoMark({ className }: { className?: string }) {
 interface LogoProps {
   className?: string;
   markClassName?: string;
+  wordmarkClassName?: string;
   showWordmark?: boolean;
 }
 
-export function Logo({ className, markClassName, showWordmark = true }: LogoProps) {
+export function Logo({
+  className,
+  markClassName,
+  wordmarkClassName,
+  showWordmark = true,
+}: LogoProps) {
   return (
     <div className={cn("flex items-center gap-2.5", className)}>
       <LogoMark className={cn("h-8 w-auto", markClassName)} />
       {showWordmark && (
-        <span className="text-2xl font-bold tracking-tight">{APP_NAME}</span>
+        <span className={cn("text-2xl font-bold tracking-tight", wordmarkClassName)}>
+          {APP_NAME}
+        </span>
       )}
     </div>
   );
