@@ -5,6 +5,7 @@ import { Inbox, ListChecks, Settings } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
+import { DumpShortcut } from "@/components/home/dump-shortcut";
 import { LiveClock } from "@/components/home/live-clock";
 import { MicButton } from "@/components/home/mic-button";
 import { WaveformBars } from "@/components/home/waveform-bars";
@@ -126,19 +127,23 @@ export default function HomePage() {
       <div className="flex flex-1 flex-col items-center justify-center gap-8 px-6 pb-16">
         <LiveClock />
 
-        <div className="flex flex-col items-center gap-4">
-          <MicButton isRecording={voice.isRecording} onClick={handleMicClick} disabled={saving} />
+        <div className="flex items-center justify-center gap-8">
+          <div className="flex flex-col items-center gap-4">
+            <MicButton isRecording={voice.isRecording} onClick={handleMicClick} disabled={saving} />
 
-          <div className="flex h-8 flex-col items-center justify-center">
-            {voice.isRecording && (
-              <div className="flex items-center gap-3">
-                <WaveformBars active />
-                <span className="text-sm font-medium tabular-nums text-muted-foreground">
-                  {formatDuration(voice.elapsedSeconds)}
-                </span>
-              </div>
-            )}
+            <div className="flex h-8 flex-col items-center justify-center">
+              {voice.isRecording && (
+                <div className="flex items-center gap-3">
+                  <WaveformBars active />
+                  <span className="text-sm font-medium tabular-nums text-muted-foreground">
+                    {formatDuration(voice.elapsedSeconds)}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
+
+          <DumpShortcut />
         </div>
 
         {voice.isRecording && voice.transcript && (
