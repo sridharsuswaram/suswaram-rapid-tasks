@@ -75,7 +75,10 @@ export function TaskCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.97 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="space-y-2.5 rounded-2xl bg-card p-4 neu-raised"
+      className={cn(
+        "space-y-2.5 rounded-2xl border-l-4 bg-card p-4 neu-raised",
+        status.accentClass
+      )}
     >
       <div className="flex items-start justify-between gap-2">
         <Link href={`/task/${task.id}`} className="min-w-0 flex-1">

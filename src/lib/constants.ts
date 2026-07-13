@@ -6,31 +6,37 @@ export const APP_TAGLINE = "Speak it. We'll remember. Organize later.";
 
 export const STATUS: Record<
   TaskStatus,
-  { label: string; badgeClass: string }
+  { label: string; badgeClass: string; accentClass: string }
 > = {
   dump: {
     label: "Dump",
     badgeClass: "bg-purple-100 text-purple-700 dark:bg-purple-500/15 dark:text-purple-300",
+    accentClass: "border-purple-500",
   },
   scheduled: {
     label: "Scheduled",
     badgeClass: "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300",
+    accentClass: "border-blue-500",
   },
   in_progress: {
     label: "In Progress",
     badgeClass: "bg-warning/15 text-warning dark:bg-warning/20 dark:text-warning",
+    accentClass: "border-warning",
   },
   completed: {
     label: "Completed",
     badgeClass: "bg-completed-foreground text-completed dark:bg-completed-foreground dark:text-completed",
+    accentClass: "border-completed",
   },
   cancelled: {
     label: "Cancelled",
     badgeClass: "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300",
+    accentClass: "border-red-500",
   },
   archived: {
     label: "Archived",
     badgeClass: "bg-muted text-muted-foreground",
+    accentClass: "border-border",
   },
 };
 
