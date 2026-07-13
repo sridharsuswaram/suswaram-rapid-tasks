@@ -50,10 +50,13 @@ export function EditTaskForm({ task, onSave, onCancel, saving }: EditTaskFormPro
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    // A task with a date set has to count as scheduled — otherwise it's
+    // stuck showing "Dump" while still appearing in date-based screens.
+    const resolvedStatus = date && status === "dump" ? "scheduled" : status;
     onSave({
       voice_transcript: transcript,
       title: transcript.slice(0, 80),
-      status,
+      status: resolvedStatus,
       priority,
       scheduled_date: date ? format(date, "yyyy-MM-dd") : null,
       scheduled_time: time ? `${time}:00` : null,

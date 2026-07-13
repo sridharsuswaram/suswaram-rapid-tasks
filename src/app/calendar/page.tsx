@@ -32,14 +32,16 @@ export default function CalendarPage() {
   const selectedISODate = format(selectedDate, "yyyy-MM-dd");
 
   const datedTasks = useMemo(() => {
-    const list = tasks.filter((t) => t.scheduled_date === selectedISODate);
+    // Exclude "dump" here too — a stray scheduled_date shouldn't make an
+    // unscheduled task show up on a specific date.
+    const list = tasks.filter((t) => t.scheduled_date === selectedISODate && t.status !== "dump");
     return sortTasks(list, "date");
   }, [tasks, selectedISODate]);
 
   const scheduledDays = useMemo(
     () =>
       tasks
-        .filter((t) => t.scheduled_date)
+        .filter((t) => t.scheduled_date && t.status !== "dump")
         .map((t) => new Date(`${t.scheduled_date}T00:00:00`)),
     [tasks]
   );

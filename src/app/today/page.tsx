@@ -23,8 +23,15 @@ export default function TodayPage() {
 
   const todayTasks = useMemo(() => {
     const today = todayISODate();
+    // A task only belongs here once it's genuinely scheduled — "dump" is
+    // excluded even if it has a stray scheduled_date from an edit that
+    // didn't also flip the status.
     const list = tasks.filter(
-      (t) => t.scheduled_date === today && t.status !== "cancelled" && t.status !== "archived"
+      (t) =>
+        t.scheduled_date === today &&
+        t.status !== "dump" &&
+        t.status !== "cancelled" &&
+        t.status !== "archived"
     );
     return sortTasks(list, "date");
   }, [tasks]);
