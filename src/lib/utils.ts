@@ -38,6 +38,14 @@ export function todayISODate() {
   return format(new Date(), "yyyy-MM-dd");
 }
 
+// Default time for the one-tap "Today" schedule action — an hour from now,
+// rounded to the hour, so a "one_time" reminder doesn't fire immediately.
+export function defaultTodayTime() {
+  const date = new Date();
+  date.setHours(date.getHours() + 1, 0, 0, 0);
+  return format(date, "HH:mm:00");
+}
+
 export function formatDuration(totalSeconds: number) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;

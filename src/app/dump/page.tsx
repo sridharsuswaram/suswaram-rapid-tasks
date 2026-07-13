@@ -14,8 +14,14 @@ import { TaskCard } from "@/components/tasks/task-card";
 import { TaskListSkeleton } from "@/components/tasks/task-list-skeleton";
 import { TopBar } from "@/components/layout/top-bar";
 import { useTasks } from "@/hooks/use-tasks";
-import { filterTasks, sortTasks } from "@/lib/utils";
-import { archiveTask, cancelTask, deleteTask, markComplete } from "@/services/tasksService";
+import { defaultTodayTime, filterTasks, sortTasks, todayISODate } from "@/lib/utils";
+import {
+  archiveTask,
+  cancelTask,
+  deleteTask,
+  markComplete,
+  scheduleTask,
+} from "@/services/tasksService";
 import type { SortOption, Task, TaskStatus } from "@/types/task";
 
 export default function DumpPage() {
@@ -77,6 +83,22 @@ export default function DumpPage() {
     }
   }
 
+  async function handleQuickToday(task: Task) {
+    try {
+      await scheduleTask(task.id, {
+        scheduled_date: todayISODate(),
+        scheduled_time: defaultTodayTime(),
+        reminder_frequency: task.reminder_frequency === "none" ? "one_time" : task.reminder_frequency,
+        priority: task.priority,
+        notes: task.notes ?? undefined,
+      });
+      toast.success("Scheduled for today");
+      refresh();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to schedule task");
+    }
+  }
+
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-1 flex-col">
       <TopBar title="Task Dump" backHref="/" />
@@ -110,6 +132,7 @@ export default function DumpPage() {
                   onReschedule={
                     task.status !== "dump" && task.status !== "completed" ? openSchedule : undefined
                   }
+                  onQuickToday={task.status !== "completed" ? handleQuickToday : undefined}
                   onComplete={task.status !== "completed" ? handleComplete : undefined}
                   onEdit={(t) => router.push(`/task/${t.id}`)}
                   onArchive={task.status !== "archived" ? handleArchive : undefined}

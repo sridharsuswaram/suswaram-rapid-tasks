@@ -5,12 +5,12 @@ import {
   Archive,
   Bell,
   Calendar as CalendarIcon,
+  CalendarClock,
   CheckCircle2,
   Clock,
   MoreVertical,
   Pencil,
   Play,
-  RotateCcw,
   Trash2,
   XCircle,
 } from "lucide-react";
@@ -41,6 +41,7 @@ import type { Task } from "@/types/task";
 interface TaskCardProps {
   task: Task;
   onSchedule?: (task: Task) => void;
+  onQuickToday?: (task: Task) => void;
   onEdit?: (task: Task) => void;
   onDelete?: (task: Task) => void;
   onArchive?: (task: Task) => void;
@@ -53,6 +54,7 @@ interface TaskCardProps {
 export function TaskCard({
   task,
   onSchedule,
+  onQuickToday,
   onEdit,
   onDelete,
   onArchive,
@@ -62,6 +64,7 @@ export function TaskCard({
   onReschedule,
 }: TaskCardProps) {
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const scheduleHandler = onSchedule ?? onReschedule;
   const status = STATUS[task.status];
   const priority = PRIORITY[task.priority];
 
@@ -89,14 +92,14 @@ export function TaskCard({
             }
           />
           <DropdownMenuContent align="end">
-            {onSchedule && (
-              <DropdownMenuItem onClick={() => onSchedule(task)}>
-                <CalendarIcon /> Quick Schedule
+            {scheduleHandler && onQuickToday && (
+              <DropdownMenuItem onClick={() => onQuickToday(task)}>
+                <CalendarClock /> Today
               </DropdownMenuItem>
             )}
-            {onReschedule && (
-              <DropdownMenuItem onClick={() => onReschedule(task)}>
-                <RotateCcw /> Reschedule
+            {scheduleHandler && (
+              <DropdownMenuItem onClick={() => scheduleHandler(task)}>
+                <CalendarIcon /> Custom Date
               </DropdownMenuItem>
             )}
             {onStart && (

@@ -12,8 +12,15 @@ import { QuickScheduleSheet } from "@/components/tasks/quick-schedule-sheet";
 import { TaskCard } from "@/components/tasks/task-card";
 import { TaskListSkeleton } from "@/components/tasks/task-list-skeleton";
 import { useTasks } from "@/hooks/use-tasks";
-import { sortTasks } from "@/lib/utils";
-import { archiveTask, cancelTask, deleteTask, markComplete, startTask } from "@/services/tasksService";
+import { defaultTodayTime, sortTasks, todayISODate } from "@/lib/utils";
+import {
+  archiveTask,
+  cancelTask,
+  deleteTask,
+  markComplete,
+  scheduleTask,
+  startTask,
+} from "@/services/tasksService";
 import type { Task } from "@/types/task";
 
 export default function CalendarPage() {
@@ -92,6 +99,22 @@ export default function CalendarPage() {
     }
   }
 
+  async function handleQuickToday(task: Task) {
+    try {
+      await scheduleTask(task.id, {
+        scheduled_date: todayISODate(),
+        scheduled_time: defaultTodayTime(),
+        reminder_frequency: task.reminder_frequency === "none" ? "one_time" : task.reminder_frequency,
+        priority: task.priority,
+        notes: task.notes ?? undefined,
+      });
+      toast.success("Scheduled for today");
+      refresh();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to schedule task");
+    }
+  }
+
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-1 flex-col">
       <TopBar title="Date View" backHref="/today" />
@@ -123,6 +146,7 @@ export default function CalendarPage() {
                   onStart={task.status === "scheduled" ? handleStart : undefined}
                   onComplete={task.status !== "completed" ? handleComplete : undefined}
                   onReschedule={task.status !== "completed" ? openReschedule : undefined}
+                  onQuickToday={task.status !== "completed" ? handleQuickToday : undefined}
                   onArchive={handleArchive}
                   onCancel={
                     task.status !== "completed" &&
