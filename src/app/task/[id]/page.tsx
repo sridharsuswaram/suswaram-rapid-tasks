@@ -112,7 +112,7 @@ export default function TaskDetailsPage() {
           <EditTaskForm task={task} onSave={handleSave} onCancel={() => setEditing(false)} saving={saving} />
         ) : (
           <>
-            <div className="space-y-3 rounded-2xl bg-card p-4 shadow-soft">
+            <div className="space-y-3 rounded-2xl bg-card p-4 neu-raised">
               <p className="whitespace-pre-wrap text-base">{task.voice_transcript}</p>
               <div className="flex flex-wrap gap-1.5">
                 <Badge className={cn("border-none", status.badgeClass)}>{status.label}</Badge>
@@ -120,7 +120,7 @@ export default function TaskDetailsPage() {
               </div>
             </div>
 
-            <dl className="grid grid-cols-2 gap-3 rounded-2xl bg-card p-4 text-sm shadow-soft">
+            <dl className="grid grid-cols-2 gap-3 rounded-2xl bg-card p-4 text-sm neu-raised">
               <div>
                 <dt className="text-muted-foreground">Created</dt>
                 <dd>{formatDate(task.created_at, "MMM d, yyyy 'at' h:mm a")}</dd>
@@ -140,13 +140,13 @@ export default function TaskDetailsPage() {
             </dl>
 
             {task.notes && (
-              <div className="space-y-1 rounded-2xl bg-card p-4 shadow-soft">
+              <div className="space-y-1 rounded-2xl bg-card p-4 neu-raised">
                 <p className="text-sm text-muted-foreground">Notes</p>
                 <p className="text-sm whitespace-pre-wrap">{task.notes}</p>
               </div>
             )}
 
-            <div className="rounded-2xl bg-card p-4 shadow-soft">
+            <div className="rounded-2xl bg-card p-4 neu-raised">
               <p className="mb-3 text-sm font-medium">Timeline</p>
               <TaskTimeline task={task} />
             </div>

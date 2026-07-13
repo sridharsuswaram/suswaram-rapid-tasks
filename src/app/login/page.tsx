@@ -37,7 +37,7 @@ export default function LoginPage() {
           <p className="text-sm text-muted-foreground">{APP_TAGLINE}</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 rounded-3xl bg-card p-6 shadow-soft">
+        <form onSubmit={handleSubmit} className="space-y-4 rounded-3xl bg-card p-6 neu-raised">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input

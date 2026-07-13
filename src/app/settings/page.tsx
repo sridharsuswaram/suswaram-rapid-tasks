@@ -90,20 +90,20 @@ export default function SettingsPage() {
       <TopBar title="Settings" backHref="/" />
 
       <div className="flex-1 space-y-6 px-4 pb-10">
-        <section className="space-y-3 rounded-2xl bg-card p-4 shadow-soft">
+        <section className="space-y-3 rounded-2xl bg-card p-4 neu-raised">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <UserRound className="size-4" /> {user?.email}
           </div>
         </section>
 
-        <section className="space-y-3 rounded-2xl bg-card p-4 shadow-soft">
+        <section className="space-y-3 rounded-2xl bg-card p-4 neu-raised">
           <Label>Theme</Label>
           <div className="flex gap-2">
             {THEME_OPTIONS.map((opt) => (
               <Button
                 key={opt.value}
                 variant={theme === opt.value ? "default" : "secondary"}
-                className={cn("flex-1 gap-1.5", theme === opt.value && "shadow-soft")}
+                className={cn("flex-1 gap-1.5", theme === opt.value && "neu-sunken-sm")}
                 onClick={() => setTheme(opt.value)}
               >
                 <opt.icon className="size-4" /> {opt.label}
@@ -112,7 +112,7 @@ export default function SettingsPage() {
           </div>
         </section>
 
-        <section className="space-y-3 rounded-2xl bg-card p-4 shadow-soft">
+        <section className="space-y-3 rounded-2xl bg-card p-4 neu-raised">
           <Label>Voice language</Label>
           <Select value={language} onValueChange={(v) => v && setLanguage(v)}>
             <SelectTrigger className="w-full">
@@ -128,7 +128,7 @@ export default function SettingsPage() {
           </Select>
         </section>
 
-        <section className="space-y-3 rounded-2xl bg-card p-4 shadow-soft">
+        <section className="space-y-3 rounded-2xl bg-card p-4 neu-raised">
           <div className="flex items-center justify-between gap-4">
             <div>
               <Label htmlFor="notif-switch">Browser reminders</Label>
@@ -144,7 +144,7 @@ export default function SettingsPage() {
           </div>
         </section>
 
-        <section className="space-y-3 rounded-2xl bg-card p-4 shadow-soft">
+        <section className="space-y-3 rounded-2xl bg-card p-4 neu-raised">
           <Label>Export data</Label>
           <div className="flex gap-2">
             <Button
@@ -166,7 +166,7 @@ export default function SettingsPage() {
           </div>
         </section>
 
-        <section className="space-y-3 rounded-2xl bg-card p-4 shadow-soft">
+        <section className="space-y-3 rounded-2xl bg-card p-4 neu-raised">
           <Label>Import data</Label>
           <input
             ref={fileInputRef}
@@ -185,7 +185,7 @@ export default function SettingsPage() {
           </Button>
         </section>
 
-        <section className="space-y-1 rounded-2xl bg-card p-4 text-center shadow-soft">
+        <section className="space-y-1 rounded-2xl bg-card p-4 text-center neu-raised">
           <p className="font-semibold">{APP_NAME}</p>
           <p className="text-sm text-muted-foreground">{APP_TAGLINE}</p>
           <p className="text-xs text-muted-foreground">Version {APP_VERSION}</p>

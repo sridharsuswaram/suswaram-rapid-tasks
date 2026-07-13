@@ -57,25 +57,39 @@
 }
 
 :root {
-  /* Suswaram Rapid Tasks — soft, premium, Apple/Notion/Linear-inspired palette */
-  --background: #faf9f7;
-  --foreground: #1f2421;
-  --card: #f1f2ee;
-  --card-foreground: #1f2421;
-  --popover: #ffffff;
-  --popover-foreground: #1f2421;
-  --primary: #16a34a;
+  /* Suswaram Rapid Tasks — Sridhar's signature neumorphic design system.
+     Card bg = page bg everywhere; depth comes only from edge-lit box-shadow
+     utilities below (.neu-raised / .neu-raised-sm / .neu-sunken / .neu-pressed). */
+  --neu-bg: #eef0f5;
+  --neu-hi-1: rgba(255, 255, 255, 1);
+  --neu-hi-2: rgba(255, 255, 255, 0.8);
+  --neu-sh-1: rgba(163, 174, 196, 0.7);
+  --neu-sh-2: rgba(148, 160, 185, 0.5);
+  --neu-sh-inset: rgba(148, 160, 185, 0.6);
+  --neu-hi-inset: rgba(255, 255, 255, 0.9);
+  --neu-accent: #1a52b8;
+  --neu-text: #2b3040;
+  --neu-text-soft: #6b7280;
+  --neu-hover: color-mix(in srgb, var(--neu-bg), black 5%);
+
+  --background: var(--neu-bg);
+  --foreground: var(--neu-text);
+  --card: var(--neu-bg);
+  --card-foreground: var(--neu-text);
+  --popover: var(--neu-bg);
+  --popover-foreground: var(--neu-text);
+  --primary: var(--neu-accent);
   --primary-foreground: #ffffff;
-  --secondary: #eef0ec;
-  --secondary-foreground: #1f2421;
-  --muted: #eef0ec;
-  --muted-foreground: #6b7280;
-  --accent: #eef0ec;
-  --accent-foreground: #1f2421;
+  --secondary: var(--neu-bg);
+  --secondary-foreground: var(--neu-text);
+  --muted: var(--neu-bg);
+  --muted-foreground: var(--neu-text-soft);
+  --accent: var(--neu-hover);
+  --accent-foreground: var(--neu-text);
   --destructive: #ef4444;
-  --border: #e4e6e0;
-  --input: #e4e6e0;
-  --ring: #16a34a;
+  --border: color-mix(in srgb, var(--neu-bg), black 10%);
+  --input: color-mix(in srgb, var(--neu-bg), black 10%);
+  --ring: var(--neu-accent);
   --success: #16a34a;
   --success-foreground: #ffffff;
   --warning: #f97316;
@@ -84,41 +98,53 @@
   --completed-foreground: #e5e7eb;
   --brand-orange: #f97316;
   --brand-orange-foreground: #ffffff;
-  --chart-1: #16a34a;
+  --chart-1: var(--neu-accent);
   --chart-2: #f97316;
-  --chart-3: #3b82f6;
+  --chart-3: #16a34a;
   --chart-4: #a855f7;
   --chart-5: #6b7280;
   --radius: 1rem;
-  --sidebar: #f1f2ee;
-  --sidebar-foreground: #1f2421;
-  --sidebar-primary: #16a34a;
+  --sidebar: var(--neu-bg);
+  --sidebar-foreground: var(--neu-text);
+  --sidebar-primary: var(--neu-accent);
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #eef0ec;
-  --sidebar-accent-foreground: #1f2421;
-  --sidebar-border: #e4e6e0;
-  --sidebar-ring: #16a34a;
+  --sidebar-accent: var(--neu-hover);
+  --sidebar-accent-foreground: var(--neu-text);
+  --sidebar-border: color-mix(in srgb, var(--neu-bg), black 10%);
+  --sidebar-ring: var(--neu-accent);
 }
 
 .dark {
-  --background: #101211;
-  --foreground: #edefea;
-  --card: #191c19;
-  --card-foreground: #edefea;
-  --popover: #191c19;
-  --popover-foreground: #edefea;
-  --primary: #22c55e;
-  --primary-foreground: #07170d;
-  --secondary: #20231f;
-  --secondary-foreground: #edefea;
-  --muted: #1e211d;
-  --muted-foreground: #9ca6a0;
-  --accent: #20231f;
-  --accent-foreground: #edefea;
+  --neu-bg: #1e2430;
+  --neu-hi-1: rgba(255, 255, 255, 0.07);
+  --neu-hi-2: rgba(255, 255, 255, 0.04);
+  --neu-sh-1: rgba(0, 0, 0, 0.55);
+  --neu-sh-2: rgba(0, 0, 0, 0.4);
+  --neu-sh-inset: rgba(0, 0, 0, 0.55);
+  --neu-hi-inset: rgba(255, 255, 255, 0.06);
+  --neu-accent: #6ea8ff;
+  --neu-text: #e3e8f2;
+  --neu-text-soft: #97a0b5;
+  --neu-hover: color-mix(in srgb, var(--neu-bg), white 7%);
+
+  --background: var(--neu-bg);
+  --foreground: var(--neu-text);
+  --card: var(--neu-bg);
+  --card-foreground: var(--neu-text);
+  --popover: var(--neu-bg);
+  --popover-foreground: var(--neu-text);
+  --primary: var(--neu-accent);
+  --primary-foreground: #0b1220;
+  --secondary: var(--neu-bg);
+  --secondary-foreground: var(--neu-text);
+  --muted: var(--neu-bg);
+  --muted-foreground: var(--neu-text-soft);
+  --accent: var(--neu-hover);
+  --accent-foreground: var(--neu-text);
   --destructive: #f87171;
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: #22c55e;
+  --border: color-mix(in srgb, var(--neu-bg), white 10%);
+  --input: color-mix(in srgb, var(--neu-bg), white 12%);
+  --ring: var(--neu-accent);
   --success: #22c55e;
   --success-foreground: #07170d;
   --warning: #fb923c;
@@ -127,19 +153,19 @@
   --completed-foreground: #262a2e;
   --brand-orange: #fb923c;
   --brand-orange-foreground: #1f1204;
-  --chart-1: #22c55e;
+  --chart-1: var(--neu-accent);
   --chart-2: #fb923c;
-  --chart-3: #60a5fa;
+  --chart-3: #22c55e;
   --chart-4: #c084fc;
   --chart-5: #9aa1a9;
-  --sidebar: #191c19;
-  --sidebar-foreground: #edefea;
-  --sidebar-primary: #22c55e;
-  --sidebar-primary-foreground: #07170d;
-  --sidebar-accent: #20231f;
-  --sidebar-accent-foreground: #edefea;
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: #22c55e;
+  --sidebar: var(--neu-bg);
+  --sidebar-foreground: var(--neu-text);
+  --sidebar-primary: var(--neu-accent);
+  --sidebar-primary-foreground: #0b1220;
+  --sidebar-accent: var(--neu-hover);
+  --sidebar-accent-foreground: var(--neu-text);
+  --sidebar-border: color-mix(in srgb, var(--neu-bg), white 10%);
+  --sidebar-ring: var(--neu-accent);
 }
 
 @layer base {
@@ -155,25 +181,40 @@
 }
 
 @layer utilities {
-  .shadow-soft {
+  /* Raised: page-coloured surface, depth from edge lighting only — never a
+     shadow cast away from the element, never a bordered/stroked card. */
+  .neu-raised {
     box-shadow:
-      0 1px 2px rgba(31, 36, 33, 0.04),
-      0 10px 28px -8px rgba(31, 36, 33, 0.1);
+      -4px -4px 8px var(--neu-hi-1),
+      -8px -8px 16px var(--neu-hi-2),
+      5px 5px 10px var(--neu-sh-1),
+      10px 10px 22px var(--neu-sh-2);
   }
-  .dark .shadow-soft {
+  .neu-raised-sm {
     box-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.3),
-      0 10px 28px -8px rgba(0, 0, 0, 0.45);
+      -3px -3px 6px var(--neu-hi-1),
+      -5px -5px 10px var(--neu-hi-2),
+      3px 3px 7px var(--neu-sh-1),
+      6px 6px 14px var(--neu-sh-2);
   }
-  .shadow-soft-lg {
+  /* Sunken: inputs, wells, and the pressed state of raised elements. */
+  .neu-sunken {
     box-shadow:
-      0 2px 4px rgba(31, 36, 33, 0.05),
-      0 20px 48px -12px rgba(31, 36, 33, 0.14);
+      inset 4px 4px 10px var(--neu-sh-inset),
+      inset -3px -3px 8px var(--neu-hi-inset);
   }
-  .dark .shadow-soft-lg {
+  .neu-sunken-sm {
     box-shadow:
-      0 2px 4px rgba(0, 0, 0, 0.35),
-      0 20px 48px -12px rgba(0, 0, 0, 0.55);
+      inset 3px 3px 7px var(--neu-sh-inset),
+      inset -2px -2px 6px var(--neu-hi-inset);
+  }
+  .neu-pressable {
+    transition: box-shadow 0.12s ease;
+  }
+  .neu-pressable:active {
+    box-shadow:
+      inset 4px 4px 10px var(--neu-sh-inset),
+      inset -3px -3px 8px var(--neu-hi-inset);
   }
 }
 
@@ -181,13 +222,15 @@
   0%,
   100% {
     box-shadow:
-      0 0 0 0 color-mix(in oklch, var(--primary) 35%, transparent),
-      0 10px 28px -8px rgba(31, 36, 33, 0.18);
+      0 0 0 0 color-mix(in oklch, var(--brand-orange) 35%, transparent),
+      inset 4px 4px 10px var(--neu-sh-inset),
+      inset -3px -3px 8px var(--neu-hi-inset);
   }
   50% {
     box-shadow:
-      0 0 0 22px color-mix(in oklch, var(--primary) 0%, transparent),
-      0 10px 28px -8px rgba(31, 36, 33, 0.18);
+      0 0 0 22px color-mix(in oklch, var(--brand-orange) 0%, transparent),
+      inset 4px 4px 10px var(--neu-sh-inset),
+      inset -3px -3px 8px var(--neu-hi-inset);
   }
 }
 

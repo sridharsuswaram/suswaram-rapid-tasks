@@ -87,7 +87,7 @@ export default function CalendarPage() {
       <TopBar title="Date View" backHref="/today" />
 
       <div className="flex-1 space-y-4 px-4 pb-8">
-        <div className="flex justify-center rounded-2xl bg-card p-2 shadow-soft">
+        <div className="flex justify-center rounded-2xl bg-card p-2 neu-raised">
           <Calendar
             mode="single"
             selected={selectedDate}

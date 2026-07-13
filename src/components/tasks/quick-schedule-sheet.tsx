@@ -87,7 +87,7 @@ export function QuickScheduleSheet({ task, open, onOpenChange, onScheduled }: Qu
         </SheetHeader>
 
         <div className="flex-1 space-y-4 overflow-y-auto px-4 pb-2">
-          <p className="line-clamp-2 rounded-xl bg-muted p-3 text-sm text-muted-foreground">
+          <p className="neu-sunken-sm line-clamp-2 rounded-xl bg-muted p-3 text-sm text-muted-foreground">
             {task?.title || task?.voice_transcript}
           </p>
 

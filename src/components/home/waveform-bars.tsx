@@ -10,7 +10,7 @@ export function WaveformBars({ active }: { active: boolean }) {
           key={i}
           className={
             active
-              ? "w-1 h-full rounded-full bg-primary animate-waveform-bar"
+              ? "w-1 h-full rounded-full bg-brand-orange animate-waveform-bar"
               : "w-1 h-1.5 rounded-full bg-border"
           }
           style={active ? { animationDelay: `${delay}s` } : undefined}

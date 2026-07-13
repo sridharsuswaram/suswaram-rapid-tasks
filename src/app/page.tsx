@@ -156,7 +156,7 @@ export default function HomePage() {
               value={manualText}
               onChange={(e) => setManualText(e.target.value)}
               placeholder="What's on your mind?"
-              className="min-h-24 rounded-2xl bg-card shadow-soft"
+              className="min-h-24 rounded-2xl bg-card neu-raised"
             />
             <Button type="submit" className="w-full" disabled={saving || !manualText.trim()}>
               Save to Dump
@@ -172,14 +172,14 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="w-full max-w-md space-y-2 rounded-2xl bg-card p-4 shadow-soft"
+              className="w-full max-w-md space-y-2 rounded-2xl bg-card p-4 neu-raised"
             >
               <p className="text-xs font-medium text-muted-foreground">Just saved</p>
               <Textarea
                 value={savedTask.voice_transcript}
                 onChange={(e) => setSavedTask({ ...savedTask, voice_transcript: e.target.value })}
                 onBlur={handleTranscriptBlur}
-                className="min-h-16 resize-none border-none bg-transparent p-0 shadow-none focus-visible:ring-0"
+                className="min-h-16 resize-none border-none bg-transparent p-0 shadow-none! focus-visible:ring-0"
               />
               <Link href="/dump" className="text-xs font-medium text-primary hover:underline">
                 View in Task Dump →

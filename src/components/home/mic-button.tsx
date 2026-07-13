@@ -18,11 +18,10 @@ export function MicButton({ isRecording, onClick, disabled }: MicButtonProps) {
       aria-pressed={isRecording}
       aria-label={isRecording ? "Stop recording" : "Start recording"}
       className={cn(
-        "relative flex size-[140px] shrink-0 items-center justify-center rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/40 disabled:opacity-50",
-        "shadow-soft-lg active:scale-[0.97]",
+        "relative flex size-[140px] shrink-0 items-center justify-center rounded-full bg-background transition-shadow duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/40 disabled:opacity-50",
         isRecording
-          ? "bg-brand-orange text-brand-orange-foreground animate-mic-glow"
-          : "bg-primary text-primary-foreground"
+          ? "neu-sunken text-brand-orange animate-mic-glow"
+          : "neu-raised text-primary"
       )}
     >
       {isRecording ? <Square className="size-11" fill="currentColor" /> : <Mic className="size-14" />}

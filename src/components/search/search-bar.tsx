@@ -17,7 +17,7 @@ export function SearchBar({ value, onChange, placeholder = "Search tasks…" }: 
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="rounded-full bg-card pl-9 shadow-soft"
+        className="rounded-full pl-9"
         aria-label="Search tasks"
       />
     </div>

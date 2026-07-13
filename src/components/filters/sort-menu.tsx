@@ -19,7 +19,7 @@ interface SortMenuProps {
 export function SortMenu({ value, onChange }: SortMenuProps) {
   return (
     <Select value={value} onValueChange={(v) => v && onChange(v as SortOption)}>
-      <SelectTrigger className="rounded-full bg-card shadow-soft" aria-label="Sort tasks">
+      <SelectTrigger className="rounded-full" aria-label="Sort tasks">
         <ArrowDownUp className="size-3.5 text-muted-foreground" />
         <SelectValue />
       </SelectTrigger>

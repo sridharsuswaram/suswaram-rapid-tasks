@@ -63,7 +63,7 @@ export function EditTaskForm({ task, onSave, onCancel, saving }: EditTaskFormPro
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl bg-card p-4 shadow-soft">
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl bg-card p-4 neu-raised">
       <div className="space-y-1.5">
         <Label htmlFor="edit-transcript">Transcript</Label>
         <Textarea

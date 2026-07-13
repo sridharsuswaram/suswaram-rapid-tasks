@@ -18,7 +18,7 @@ export function FilterBar({ value, onChange }: FilterBarProps) {
           key={opt.value}
           size="sm"
           variant={value === opt.value ? "default" : "secondary"}
-          className={cn("shrink-0 rounded-full", value === opt.value && "shadow-soft")}
+          className={cn("shrink-0 rounded-full", value === opt.value && "neu-sunken-sm")}
           onClick={() => onChange(opt.value)}
         >
           {opt.label}
