@@ -13,7 +13,7 @@ import { TaskCard } from "@/components/tasks/task-card";
 import { TaskListSkeleton } from "@/components/tasks/task-list-skeleton";
 import { useTasks } from "@/hooks/use-tasks";
 import { sortTasks } from "@/lib/utils";
-import { archiveTask, deleteTask, markComplete, startTask } from "@/services/tasksService";
+import { archiveTask, cancelTask, deleteTask, markComplete, startTask } from "@/services/tasksService";
 import type { Task } from "@/types/task";
 
 export default function CalendarPage() {
@@ -82,6 +82,16 @@ export default function CalendarPage() {
     }
   }
 
+  async function handleCancel(task: Task) {
+    try {
+      await cancelTask(task.id);
+      toast.success("Task cancelled");
+      refresh();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to cancel task");
+    }
+  }
+
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-1 flex-col">
       <TopBar title="Date View" backHref="/today" />
@@ -114,6 +124,13 @@ export default function CalendarPage() {
                   onComplete={task.status !== "completed" ? handleComplete : undefined}
                   onReschedule={task.status !== "completed" ? openReschedule : undefined}
                   onArchive={handleArchive}
+                  onCancel={
+                    task.status !== "completed" &&
+                    task.status !== "cancelled" &&
+                    task.status !== "archived"
+                      ? handleCancel
+                      : undefined
+                  }
                   onDelete={handleDelete}
                 />
               ))}

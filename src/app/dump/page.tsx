@@ -15,7 +15,7 @@ import { TaskListSkeleton } from "@/components/tasks/task-list-skeleton";
 import { TopBar } from "@/components/layout/top-bar";
 import { useTasks } from "@/hooks/use-tasks";
 import { filterTasks, sortTasks } from "@/lib/utils";
-import { archiveTask, deleteTask, markComplete } from "@/services/tasksService";
+import { archiveTask, cancelTask, deleteTask, markComplete } from "@/services/tasksService";
 import type { SortOption, Task, TaskStatus } from "@/types/task";
 
 export default function DumpPage() {
@@ -67,6 +67,16 @@ export default function DumpPage() {
     }
   }
 
+  async function handleCancel(task: Task) {
+    try {
+      await cancelTask(task.id);
+      toast.success("Task cancelled");
+      refresh();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to cancel task");
+    }
+  }
+
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-1 flex-col">
       <TopBar title="Task Dump" backHref="/" />
@@ -103,6 +113,13 @@ export default function DumpPage() {
                   onComplete={task.status !== "completed" ? handleComplete : undefined}
                   onEdit={(t) => router.push(`/task/${t.id}`)}
                   onArchive={task.status !== "archived" ? handleArchive : undefined}
+                  onCancel={
+                    task.status !== "completed" &&
+                    task.status !== "cancelled" &&
+                    task.status !== "archived"
+                      ? handleCancel
+                      : undefined
+                  }
                   onDelete={handleDelete}
                 />
               ))}
