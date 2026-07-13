@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { TopBar } from "@/components/layout/top-bar";
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -18,7 +19,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/hooks/use-auth";
 import { useVoiceLanguage } from "@/hooks/use-voice-language";
-import { APP_NAME, APP_TAGLINE, APP_VERSION, VOICE_LANGUAGE_OPTIONS } from "@/lib/constants";
+import { APP_TAGLINE, APP_VERSION, VOICE_LANGUAGE_OPTIONS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { exportTasksAsCSV, exportTasksAsJSON } from "@/services/exportService";
 import { parseImportFile } from "@/services/importService";
@@ -185,8 +186,8 @@ export default function SettingsPage() {
           </Button>
         </section>
 
-        <section className="space-y-1 rounded-2xl bg-card p-4 text-center neu-raised">
-          <p className="font-semibold">{APP_NAME}</p>
+        <section className="space-y-2 rounded-2xl bg-card p-4 text-center neu-raised">
+          <Logo className="justify-center" />
           <p className="text-sm text-muted-foreground">{APP_TAGLINE}</p>
           <p className="text-xs text-muted-foreground">Version {APP_VERSION}</p>
         </section>

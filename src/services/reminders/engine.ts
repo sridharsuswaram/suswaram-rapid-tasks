@@ -1,3 +1,4 @@
+import { APP_NAME } from "@/lib/constants";
 import { listTasks, updateTask } from "@/services/tasksService";
 import type { Task } from "@/types/task";
 import { browserNotificationProvider } from "./browser-provider";
@@ -72,7 +73,7 @@ async function tick(providers: NotificationProvider[]) {
 
     const message = {
       taskId: task.id,
-      title: "Suswaram Rapid Tasks",
+      title: APP_NAME,
       body: task.title || task.voice_transcript,
     };
 

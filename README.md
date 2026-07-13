@@ -1,6 +1,9 @@
-# Suswaram Rapid Tasks
+# Vox
 
 Speak it. We'll remember. Organize later.
+
+_Product name: **Vox**. Repo, npm package, Firebase project, and Vercel domain remain
+`suswaram-rapid-tasks` — only the on-screen branding changed._
 
 A voice-first brain dump app: press the mic, say your thought, it's saved instantly with no
 save button. Organize it into a schedule whenever you get a moment.

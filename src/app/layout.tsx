@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Suswaram Rapid Tasks",
+  title: "Vox",
   description: "Speak it. We'll remember. Organize later.",
 };
 
@@ -22,8 +22,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#faf9f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#101211" },
+    { media: "(prefers-color-scheme: light)", color: "#eef0f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#1e2430" },
   ],
 };
 

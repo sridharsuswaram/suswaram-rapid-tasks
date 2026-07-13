@@ -4,11 +4,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "sonner";
+import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/use-auth";
-import { APP_NAME, APP_TAGLINE } from "@/lib/constants";
+import { APP_TAGLINE } from "@/lib/constants";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -33,8 +34,8 @@ export default function SignupPage() {
   return (
     <main className="flex min-h-dvh flex-1 items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm space-y-8">
-        <div className="space-y-1 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">{APP_NAME}</h1>
+        <div className="space-y-2 text-center">
+          <Logo className="justify-center" />
           <p className="text-sm text-muted-foreground">{APP_TAGLINE}</p>
         </div>
 

@@ -1,6 +1,6 @@
 import type { ReminderFrequency, TaskPriority, TaskStatus } from "@/types/task";
 
-export const APP_NAME = "Suswaram Rapid Tasks";
+export const APP_NAME = "Vox";
 export const APP_VERSION = "0.1.0";
 export const APP_TAGLINE = "Speak it. We'll remember. Organize later.";
 

@@ -6,12 +6,16 @@ This file provides guidance to Claude Code when working in this repository.
 
 ## Project
 
-**Suswaram Rapid Tasks** — a voice-first "brain dump" app. The product is not a task manager; it's
-a capture tool: press the mic, speak a thought, it auto-saves with no save button, and the user
-organizes/schedules it later from the Task Dump screen. v0.1 MVP, owner Sridhar Suswaram
-(sridhar@suswaram.com). Sibling project to Momentum and Suswaram Expense Tracker but on a
-different stack (Next.js/TypeScript, not Vite/JS) and a different visual identity (soft-shadow
-Apple/Notion/Linear look, not the neumorphic style used in those other two apps).
+**Vox** (repo/package/Firebase project/Vercel domain still `suswaram-rapid-tasks` — only the
+on-screen brand changed, 2026-07-13) — a voice-first "brain dump" app. The product is not a task
+manager; it's a capture tool: press the mic, speak a thought, it auto-saves with no save button,
+and the user organizes/schedules it later from the Task Dump screen. v0.1 MVP, owner Sridhar
+Suswaram (sridhar@suswaram.com). Sibling project to Momentum and Suswaram Expense Tracker, on a
+different stack (Next.js/TypeScript, not Vite/JS), but now sharing their neumorphic visual identity
+(see Design system below — this app started with a distinct soft-shadow look, then switched to
+match Momentum/Expense Tracker on request). Logo: `src/components/logo.tsx` (mic + soundwave mark,
+blue `#1a52b8` / orange `#f97316`), also duplicated as static markup in `src/app/icon.svg` for the
+favicon since that file can't use Tailwind classes or dark-mode variants.
 
 ## Commands
 
@@ -78,17 +82,29 @@ stops — no save button, per the product's core "speed over ceremony" requireme
 - Colors/labels for status & priority chips live in `src/lib/constants.ts` (`STATUS`, `PRIORITY`
   maps) — add new ones there, not inline in components.
 
-## Design system — soft-shadow, not neumorphic
+## Design system — Sridhar's signature neumorphic style
 
-Deliberately different from Momentum/Expense Tracker's embossed style:
+Matches Momentum/Expense Tracker's embossed look (switched from an earlier distinct soft-shadow
+theme on request, 2026-07-13):
 
-- Page background (`#faf9f7` light / `#101211` dark) and card background (`#f1f2ee` / `#191c19`)
-  are **distinct** colors — depth comes from a real soft drop shadow (`.shadow-soft` /
-  `.shadow-soft-lg` utility classes in `src/app/globals.css`), not edge lighting.
-- Primary = green (`--primary`), Accent = orange (`--brand-orange`), rounded corners throughout
-  (`--radius: 1rem`). Dark mode via `next-themes`, toggled in Settings.
-- Mic button glow: `.animate-mic-glow` keyframe in `globals.css`. Waveform bars:
-  `.animate-waveform-bar`.
+- Page background and card background are the **exact same colour**: `#eef0f5` light / `#1e2430`
+  dark (`--neu-bg` in `globals.css`). Depth comes only from edge-lit box-shadow utility classes —
+  `.neu-raised` / `.neu-raised-sm` (raised), `.neu-sunken` / `.neu-sunken-sm` (inputs, pressed/
+  active states), `.neu-pressable` (adds the sunken shadow on `:active`). **No borders, no floating
+  drop shadows** — every shadcn primitive (Button, Input, Select, Sheet, Dialog, Popover,
+  DropdownMenu) was restyled to these classes instead of its default border/ring/shadow-md.
+- `--primary` = blue `#1a52b8` light / `#6ea8ff` dark (was green). `--brand-orange` = `#f97316` /
+  `#fb923c`, used for the mic's recording state and the logo's soundwave bars. Buttons render
+  page-colored with colored text (`neu-raised-sm bg-background text-primary`), not solid fills —
+  see `default`/`outline`/`secondary`/`destructive` variants in `button.tsx`.
+- Toggled/selected states (filter chips, theme picker, the mic button while recording) use
+  `.neu-sunken-sm`/`.neu-sunken` to read as "pressed in," not another raised layer.
+- Status/priority chip colors (`STATUS`/`PRIORITY` maps in `lib/constants.ts`) stay distinct hues
+  (purple/blue/orange/red/gray) — that's separate from the monochrome card/button chrome. Each
+  `TaskCard` also gets a `border-l-4` colored accent stripe (`STATUS[...].accentClass`) matching its
+  status, added on request since same-color cards read as monotonous without it.
+- Mic button glow: `.animate-mic-glow` keyframe in `globals.css` (pulses an orange ring on top of
+  the sunken/pressed shadow while recording). Waveform bars: `.animate-waveform-bar`.
 
 ## Things that look like bugs but aren't
 
