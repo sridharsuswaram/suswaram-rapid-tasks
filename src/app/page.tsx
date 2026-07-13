@@ -1,12 +1,12 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Inbox, ListChecks, Settings } from "lucide-react";
+import { CalendarDays, Inbox, ListChecks, Settings } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import { DumpShortcut } from "@/components/home/dump-shortcut";
 import { LiveClock } from "@/components/home/live-clock";
+import { MenuShortcut } from "@/components/home/menu-shortcut";
 import { MicButton } from "@/components/home/mic-button";
 import { WaveformBars } from "@/components/home/waveform-bars";
 import { Logo } from "@/components/logo";
@@ -87,69 +87,55 @@ export default function HomePage() {
 
   return (
     <main className="flex min-h-dvh flex-1 flex-col bg-background">
-      <header className="relative flex h-14 shrink-0 items-center justify-between px-4">
-        <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Task Dump"
-            nativeButton={false}
-            render={
-              <Link href="/dump">
-                <Inbox />
-              </Link>
-            }
-          />
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Settings"
-            nativeButton={false}
-            render={
-              <Link href="/settings">
-                <Settings />
-              </Link>
-            }
-          />
-        </div>
-        <Logo
-          className="absolute left-1/2 -translate-x-1/2"
-          markClassName="h-6 w-auto"
-          wordmarkClassName="text-lg"
-        />
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Today's Tasks"
-          nativeButton={false}
-          render={
-            <Link href="/today">
-              <ListChecks />
-            </Link>
-          }
-        />
+      <header className="flex h-14 shrink-0 items-center justify-center px-4">
+        <Logo markClassName="h-6 w-auto" wordmarkClassName="text-lg" />
       </header>
 
-      <div className="flex flex-1 flex-col items-center justify-center gap-8 px-6 pb-16">
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 pb-16">
         <LiveClock />
 
-        <div className="flex items-center justify-center gap-8">
-          <div className="flex flex-col items-center gap-4">
-            <MicButton isRecording={voice.isRecording} onClick={handleMicClick} disabled={saving} />
+        <div className="grid w-full max-w-[300px] grid-cols-3 grid-rows-3 items-center justify-items-center gap-3">
+          <MenuShortcut
+            href="/settings"
+            icon={Settings}
+            label="Settings"
+            className="col-start-1 row-start-1"
+          />
+          <MenuShortcut
+            href="/dump"
+            icon={Inbox}
+            label="Task Dump"
+            className="col-start-3 row-start-1"
+          />
+          <MicButton
+            isRecording={voice.isRecording}
+            onClick={handleMicClick}
+            disabled={saving}
+            className="col-start-2 row-start-2"
+          />
+          <MenuShortcut
+            href="/today"
+            icon={ListChecks}
+            label="Today"
+            className="col-start-1 row-start-3"
+          />
+          <MenuShortcut
+            href="/calendar"
+            icon={CalendarDays}
+            label="Date View"
+            className="col-start-3 row-start-3"
+          />
+        </div>
 
-            <div className="flex h-8 flex-col items-center justify-center">
-              {voice.isRecording && (
-                <div className="flex items-center gap-3">
-                  <WaveformBars active />
-                  <span className="text-sm font-medium tabular-nums text-muted-foreground">
-                    {formatDuration(voice.elapsedSeconds)}
-                  </span>
-                </div>
-              )}
+        <div className="flex h-8 flex-col items-center justify-center">
+          {voice.isRecording && (
+            <div className="flex items-center gap-3">
+              <WaveformBars active />
+              <span className="text-sm font-medium tabular-nums text-muted-foreground">
+                {formatDuration(voice.elapsedSeconds)}
+              </span>
             </div>
-          </div>
-
-          <DumpShortcut />
+          )}
         </div>
 
         {voice.isRecording && voice.transcript && (

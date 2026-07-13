@@ -7,9 +7,10 @@ interface MicButtonProps {
   isRecording: boolean;
   onClick: () => void;
   disabled?: boolean;
+  className?: string;
 }
 
-export function MicButton({ isRecording, onClick, disabled }: MicButtonProps) {
+export function MicButton({ isRecording, onClick, disabled, className }: MicButtonProps) {
   return (
     <button
       type="button"
@@ -21,7 +22,8 @@ export function MicButton({ isRecording, onClick, disabled }: MicButtonProps) {
         "relative flex size-[140px] shrink-0 items-center justify-center rounded-full bg-background transition-shadow duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/40 disabled:opacity-50",
         isRecording
           ? "neu-sunken text-brand-orange animate-mic-glow"
-          : "neu-raised text-primary"
+          : "neu-raised text-primary",
+        className
       )}
     >
       {isRecording ? <Square className="size-11" fill="currentColor" /> : <Mic className="size-14" />}
