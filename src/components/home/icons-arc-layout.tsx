@@ -9,11 +9,12 @@ export function IconsArcLayout() {
     { href: "/dump", emoji: "🧸", label: "Brain Dump" },
     { href: "/today", emoji: "🐇", label: "Today" },
     { href: "/calendar", emoji: "🕊️", label: "Ahead" },
+    { href: "/analytics", emoji: "📊", label: "Analytics" },
   ];
 
   return (
     <motion.div
-      className="flex flex-wrap gap-8 justify-center mt-8"
+      className="flex flex-wrap gap-4 sm:gap-8 justify-center mt-6 px-2"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
@@ -24,25 +25,23 @@ export function IconsArcLayout() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: idx * 0.08, duration: 0.3 }}
+          className="flex flex-col items-center"
         >
           <Link
             href={item.href}
-            className="flex flex-col items-center gap-2 group"
+            className="flex flex-col items-center gap-2 w-16 sm:w-20"
           >
             <motion.span
-              className="text-5xl cursor-pointer"
+              className="text-4xl sm:text-5xl cursor-pointer block"
               whileHover={{ scale: 1.25, rotate: 8 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               {item.emoji}
             </motion.span>
-            <motion.span
-              className="text-xs font-medium text-muted-foreground opacity-0 group-hover:opacity-100"
-              transition={{ duration: 0.2 }}
-            >
+            <span className="text-xs font-medium text-muted-foreground text-center line-clamp-2">
               {item.label}
-            </motion.span>
+            </span>
           </Link>
         </motion.div>
       ))}
