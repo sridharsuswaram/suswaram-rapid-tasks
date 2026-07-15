@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { BarChart3 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -87,12 +86,8 @@ export default function HomePage() {
 
   return (
     <main className="flex min-h-dvh flex-1 flex-col bg-background">
-      <header className="flex h-14 shrink-0 items-center justify-between px-4">
-        <div className="w-6" />
+      <header className="flex h-14 shrink-0 items-center justify-center px-4">
         <Logo markClassName="h-6 w-auto" wordmarkClassName="text-lg" />
-        <Link href="/analytics" className="rounded-lg p-2 hover:bg-card" aria-label="Analytics">
-          <BarChart3 className="h-5 w-5 text-muted-foreground hover:text-foreground" />
-        </Link>
       </header>
 
       <div className="flex flex-1 flex-col items-center justify-center gap-8 px-6 pb-16">
