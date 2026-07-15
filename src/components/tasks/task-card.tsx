@@ -34,6 +34,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { TagDisplay } from "@/components/tasks/tag-display";
 import { PRIORITY, STATUS } from "@/lib/constants";
 import { cn, formatDate, formatTime } from "@/lib/utils";
 import type { Task } from "@/types/task";
@@ -148,6 +149,12 @@ export function TaskCard({
           </Badge>
         )}
       </div>
+
+      {task.tags && task.tags.length > 0 && (
+        <div className="pt-1">
+          <TagDisplay tags={task.tags} />
+        </div>
+      )}
 
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
         <span className="flex items-center gap-1">
