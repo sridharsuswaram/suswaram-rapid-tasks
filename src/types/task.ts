@@ -41,6 +41,7 @@ export interface Task {
   archive: boolean;
   is_dump: boolean;
   source: TaskSource;
+  tags: string[];
 }
 
 export type TaskInsert = Pick<Task, "title" | "voice_transcript"> &
