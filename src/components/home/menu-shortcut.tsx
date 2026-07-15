@@ -6,13 +6,15 @@ import { cn } from "@/lib/utils";
 
 interface MenuShortcutProps {
   href: string;
-  icon: LucideIcon;
+  icon: LucideIcon | string;
   label: string;
   className?: string;
   color?: string;
 }
 
-export function MenuShortcut({ href, icon: Icon, label, className, color }: MenuShortcutProps) {
+export function MenuShortcut({ href, icon, label, className, color }: MenuShortcutProps) {
+  const isEmoji = typeof icon === "string";
+
   return (
     <Link
       href={href}
@@ -23,7 +25,14 @@ export function MenuShortcut({ href, icon: Icon, label, className, color }: Menu
       )}
     >
       <span className="neu-raised-sm flex size-13 items-center justify-center rounded-full bg-background" style={{ color: color || "currentColor" }}>
-        <Icon className="size-5" />
+        {isEmoji ? (
+          <span className="text-2xl">{icon}</span>
+        ) : (
+          (() => {
+            const IconComponent = icon as LucideIcon;
+            return <IconComponent className="size-5" />;
+          })()
+        )}
       </span>
       <span className="text-xs font-medium text-muted-foreground">{label}</span>
     </Link>
