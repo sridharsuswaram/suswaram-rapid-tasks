@@ -9,6 +9,7 @@ import { LiveClock } from "@/components/home/live-clock";
 import { MicButton } from "@/components/home/mic-button";
 import { WaveformBars } from "@/components/home/waveform-bars";
 import { Logo } from "@/components/logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useVoiceLanguage } from "@/hooks/use-voice-language";
@@ -86,8 +87,10 @@ export default function HomePage() {
 
   return (
     <main className="flex min-h-dvh flex-1 flex-col bg-background">
-      <header className="flex h-14 shrink-0 items-center justify-center px-4">
+      <header className="flex h-14 shrink-0 items-center justify-between px-4">
+        <div className="w-6" />
         <Logo markClassName="h-6 w-auto" wordmarkClassName="text-lg" />
+        <ThemeToggle />
       </header>
 
       <div className="flex flex-1 flex-col items-center justify-center gap-8 px-6 pb-16">
