@@ -6,27 +6,30 @@ import { MenuShortcut } from "./menu-shortcut";
 
 export function IconsArcLayout() {
   const icons = [
-    { href: "/settings", icon: Settings, label: "Settings", top: "120px", left: "calc(50% - 110px)" },
-    { href: "/dump", icon: Inbox, label: "Task Dump", top: "180px", left: "calc(50% - 70px)" },
-    { href: "/calendar", icon: CalendarDays, label: "Date View", top: "180px", left: "calc(50% + 70px)" },
-    { href: "/today", icon: ListChecks, label: "Today", top: "120px", left: "calc(50% + 110px)" },
+    { href: "/settings", icon: Settings, label: "Settings" },
+    { href: "/dump", icon: Inbox, label: "Task Dump" },
+    { href: "/today", icon: ListChecks, label: "Today" },
+    { href: "/calendar", icon: CalendarDays, label: "Date View" },
   ];
 
   return (
-    <div className="relative w-full h-80">
+    <motion.div
+      className="flex gap-4 mt-6"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
       {icons.map((item, idx) => (
         <motion.div
           key={item.label}
-          className="absolute"
-          style={{ top: item.top, left: item.left, transform: "translate(-50%, -50%)" }}
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: idx * 0.1, duration: 0.4 }}
+          transition={{ delay: idx * 0.05, duration: 0.3 }}
           whileHover={{ scale: 1.1 }}
         >
           <MenuShortcut href={item.href} icon={item.icon} label={item.label} />
         </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
