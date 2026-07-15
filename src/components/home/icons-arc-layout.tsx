@@ -5,10 +5,10 @@ import { CalendarDays, Inbox, ListChecks, Settings } from "lucide-react";
 import { MenuShortcut } from "./menu-shortcut";
 
 const ICONS = [
-  { href: "/settings", icon: Settings, label: "Settings", angle: 135 },
-  { href: "/dump", icon: Inbox, label: "Task Dump", angle: 180 },
-  { href: "/calendar", icon: CalendarDays, label: "Date View", angle: 0 },
-  { href: "/today", icon: ListChecks, label: "Today", angle: 45 },
+  { href: "/settings", icon: Settings, label: "Settings", angle: 150 },
+  { href: "/dump", icon: Inbox, label: "Task Dump", angle: 210 },
+  { href: "/calendar", icon: CalendarDays, label: "Date View", angle: 330 },
+  { href: "/today", icon: ListChecks, label: "Today", angle: 30 },
 ];
 
 const ARC_RADIUS = 90;
