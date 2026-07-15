@@ -26,6 +26,8 @@ export default function HomePage() {
   const [manualText, setManualText] = useState("");
   const [saving, setSaving] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
+  const [showTagsPanel, setShowTagsPanel] = useState(false);
+  const [recordedTranscript, setRecordedTranscript] = useState("");
   const wasRecording = useRef(false);
   const quote = useMemo(() => getQuoteOfTheDay(), []);
 
@@ -33,13 +35,18 @@ export default function HomePage() {
     if (wasRecording.current && !voice.isRecording) {
       const text = voice.transcript.trim();
       if (text) {
-        // Wait 3 seconds for user to add tags, then auto-save
+        setRecordedTranscript(text);
+        setShowTagsPanel(true);
+
+        // Wait 5 seconds for user to add tags, then auto-save
         const timeout = setTimeout(() => {
           setSaving(true);
           createDumpTask({ voice_transcript: text, tags })
             .then((task) => {
               setSavedTask(task);
               setTags([]);
+              setShowTagsPanel(false);
+              setRecordedTranscript("");
               toast.success("Task Saved Successfully");
               voice.reset();
             })
@@ -47,7 +54,7 @@ export default function HomePage() {
               toast.error(err instanceof Error ? err.message : "Failed to save task");
             })
             .finally(() => setSaving(false));
-        }, 3000);
+        }, 5000);
 
         return () => clearTimeout(timeout);
       }
@@ -60,6 +67,8 @@ export default function HomePage() {
     if (!voice.isRecording) {
       setSavedTask(null);
       setTags([]);
+      setShowTagsPanel(false);
+      setRecordedTranscript("");
     }
     voice.toggle();
   }
@@ -129,7 +138,7 @@ export default function HomePage() {
           <p className="max-w-md text-center text-sm text-muted-foreground">{voice.transcript}</p>
         )}
 
-        {!voice.isRecording && voice.transcript && !savedTask && (
+        {showTagsPanel && !savedTask && (
           <div className="w-full max-w-md">
             <QuickTags tags={tags} onTagsChange={setTags} />
           </div>
