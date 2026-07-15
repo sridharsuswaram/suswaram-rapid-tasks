@@ -68,14 +68,11 @@ export default function AnalyticsPage() {
 
   return (
     <main className="flex min-h-dvh flex-col bg-background">
-      <header className="flex h-14 shrink-0 items-center gap-3 px-4">
-        <Link href="/" className="text-2xl hover:scale-110 transition-transform">
+      <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-6 pb-16 sm:max-w-2xl sm:mx-auto sm:w-full">
+        {/* Home button */}
+        <Link href="/" className="text-2xl hover:scale-110 transition-transform w-fit" aria-label="Home">
           🏠
         </Link>
-        <h1 className="text-lg font-semibold">Analytics</h1>
-      </header>
-
-      <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-6 pb-16 sm:max-w-2xl sm:mx-auto sm:w-full">
         {/* Hero Metric - Completion Rate */}
         <motion.div
           className="rounded-3xl bg-card p-8 neu-raised text-center"
