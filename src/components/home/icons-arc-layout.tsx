@@ -12,24 +12,22 @@ const ICONS = [
 ];
 
 const ARC_RADIUS = 90;
-const CENTER_X = 0;
-const CENTER_Y = 0;
+const CENTER_X = 192;
+const CENTER_Y = 120;
 
 export function IconsArcLayout() {
   const calculatePosition = (angle: number) => {
     const rad = (angle * Math.PI) / 180;
+    const x = ARC_RADIUS * Math.cos(rad);
+    const y = ARC_RADIUS * Math.sin(rad);
     return {
-      x: ARC_RADIUS * Math.cos(rad),
-      y: ARC_RADIUS * Math.sin(rad),
+      left: CENTER_X + x,
+      top: CENTER_Y + y,
     };
   };
 
   return (
-    <div className="relative h-72 w-full flex items-center justify-center">
-      {/* Central MIC button placeholder - actual MicButton sits above this */}
-      <div className="absolute pointer-events-none" />
-
-      {/* Arc icons container */}
+    <div className="relative w-full h-64">
       {ICONS.map((item, idx) => {
         const pos = calculatePosition(item.angle);
 
@@ -45,12 +43,12 @@ export function IconsArcLayout() {
               ease: "easeOut",
             }}
             style={{
-              x: pos.x,
-              y: pos.y,
+              left: `${pos.left}px`,
+              top: `${pos.top}px`,
+              transform: "translate(-50%, -50%)",
             }}
             whileHover={{
               scale: 1.15,
-              y: pos.y - 8,
               transition: { duration: 0.2 },
             }}
           >
