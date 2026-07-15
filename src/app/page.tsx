@@ -37,31 +37,29 @@ export default function HomePage() {
       if (text) {
         setRecordedTranscript(text);
         setShowTagsPanel(true);
-
-        // Wait 5 seconds for user to add tags, then auto-save
-        const timeout = setTimeout(() => {
-          setSaving(true);
-          createDumpTask({ voice_transcript: text, tags })
-            .then((task) => {
-              setSavedTask(task);
-              setTags([]);
-              setShowTagsPanel(false);
-              setRecordedTranscript("");
-              toast.success("Task Saved Successfully");
-              voice.reset();
-            })
-            .catch((err) => {
-              toast.error(err instanceof Error ? err.message : "Failed to save task");
-            })
-            .finally(() => setSaving(false));
-        }, 5000);
-
-        return () => clearTimeout(timeout);
       }
     }
     wasRecording.current = voice.isRecording;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voice.isRecording]);
+
+  async function handleSaveWithTags() {
+    if (!recordedTranscript) return;
+    setSaving(true);
+    try {
+      const task = await createDumpTask({ voice_transcript: recordedTranscript, tags });
+      setSavedTask(task);
+      setTags([]);
+      setShowTagsPanel(false);
+      setRecordedTranscript("");
+      toast.success("Task Saved Successfully");
+      voice.reset();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to save task");
+    } finally {
+      setSaving(false);
+    }
+  }
 
   function handleMicClick() {
     if (!voice.isRecording) {
@@ -139,9 +137,34 @@ export default function HomePage() {
         )}
 
         {showTagsPanel && !savedTask && (
-          <div className="w-full max-w-md">
+          <motion.div
+            className="w-full max-w-md space-y-3"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <QuickTags tags={tags} onTagsChange={setTags} />
-          </div>
+            <div className="flex gap-2">
+              <button
+                onClick={handleSaveWithTags}
+                disabled={saving}
+                className="flex-1 rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 disabled:opacity-50 transition-colors"
+              >
+                {saving ? "Saving..." : "Save Task"}
+              </button>
+              <button
+                onClick={() => {
+                  setShowTagsPanel(false);
+                  setTags([]);
+                  setRecordedTranscript("");
+                  voice.reset();
+                }}
+                className="rounded-lg bg-background px-4 py-2 text-sm font-medium hover:bg-background/80 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </motion.div>
         )}
 
         {voice.error && <p className="text-sm text-destructive">{voice.error}</p>}
