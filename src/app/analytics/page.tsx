@@ -4,20 +4,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Flame, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { Button } from "@/components/ui/button";
 import { calculateAnalytics, type AnalyticsMetrics } from "@/lib/analytics";
 import { listTasks } from "@/services/tasksService";
-import type { Task } from "@/types/task";
-
-const STATUS_COLORS: { [key: string]: string } = {
-  dump: "#93c5fd",
-  scheduled: "#c4b5fd",
-  in_progress: "#86efac",
-  completed: "#34d399",
-  cancelled: "#fca5a5",
-  archived: "#d1d5db",
-};
 
 export default function AnalyticsPage() {
   const [metrics, setMetrics] = useState<AnalyticsMetrics | null>(null);
@@ -70,11 +58,14 @@ export default function AnalyticsPage() {
     );
   }
 
-  const statusData = Object.entries(metrics.statusBreakdown).map(([status, count]) => ({
-    name: status.replace("_", " "),
-    value: count,
-    fill: STATUS_COLORS[status],
-  }));
+  const statuses = [
+    { label: "Dump", value: metrics.statusBreakdown.dump, color: "text-blue-500" },
+    { label: "Scheduled", value: metrics.statusBreakdown.scheduled, color: "text-purple-500" },
+    { label: "In Progress", value: metrics.statusBreakdown.in_progress, color: "text-green-500" },
+    { label: "Completed", value: metrics.statusBreakdown.completed, color: "text-emerald-500" },
+    { label: "Cancelled", value: metrics.statusBreakdown.cancelled, color: "text-red-500" },
+    { label: "Archived", value: metrics.statusBreakdown.archived, color: "text-gray-500" },
+  ];
 
   return (
     <main className="flex min-h-dvh flex-col bg-background">
@@ -115,65 +106,22 @@ export default function AnalyticsPage() {
           </div>
         </motion.div>
 
-        {/* Charts */}
+        {/* Status Breakdown */}
         <motion.div
           className="rounded-2xl bg-card p-4 neu-raised"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <h2 className="mb-4 text-sm font-semibold">Tasks by Hour</h2>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={metrics.tasksByHour}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-              <XAxis dataKey="hour" stroke="var(--text-muted)" fontSize={12} />
-              <YAxis stroke="var(--text-muted)" fontSize={12} />
-              <Tooltip
-                contentStyle={{
-                  background: "var(--surface-1)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "8px",
-                }}
-                labelStyle={{ color: "var(--text-primary)" }}
-              />
-              <Bar dataKey="count" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </motion.div>
-
-        {/* Status Breakdown */}
-        <motion.div
-          className="rounded-2xl bg-card p-4 neu-raised"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <h2 className="mb-4 text-sm font-semibold">Task Status</h2>
-          <ResponsiveContainer width="100%" height={250}>
-            <PieChart>
-              <Pie
-                data={statusData.filter((d) => d.value > 0)}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, value }) => `${name}: ${value}`}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {statusData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.fill} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  background: "var(--surface-1)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "8px",
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+          <h2 className="mb-4 text-sm font-semibold">Task Status Breakdown</h2>
+          <div className="grid grid-cols-2 gap-3">
+            {statuses.map((status) => (
+              <div key={status.label} className="rounded-lg bg-background p-3">
+                <p className="text-xs text-muted-foreground">{status.label}</p>
+                <p className={`mt-2 text-xl font-bold ${status.color}`}>{status.value}</p>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Summary Stats */}
@@ -181,15 +129,15 @@ export default function AnalyticsPage() {
           className="space-y-3 rounded-2xl bg-card p-4 neu-raised"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.2 }}
         >
           <h2 className="text-sm font-semibold">Summary</h2>
           <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
+            <div className="flex justify-between border-b border-border pb-2">
               <span className="text-muted-foreground">Total Tasks</span>
               <span className="font-medium">{metrics.totalTasks}</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between border-b border-border pb-2">
               <span className="text-muted-foreground">Completed</span>
               <span className="font-medium">{metrics.totalCompleted}</span>
             </div>

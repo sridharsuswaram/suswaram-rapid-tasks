@@ -12,7 +12,7 @@ export interface AnalyticsMetrics {
   statusBreakdown: {
     dump: number;
     scheduled: number;
-    inProgress: number;
+    in_progress: number;
     completed: number;
     cancelled: number;
     archived: number;
@@ -26,20 +26,20 @@ export function calculateAnalytics(tasks: Task[]): AnalyticsMetrics {
   const monthAgo = new Date(today.getFullYear(), today.getMonth(), 1);
 
   const completedToday = tasks.filter((t) => {
-    if (t.status !== "completed" || !t.completed_at) return false;
-    const completedDate = new Date(t.completed_at);
+    if (t.status !== "completed" || !t.completed_on) return false;
+    const completedDate = new Date(t.completed_on);
     return completedDate >= today;
   }).length;
 
   const completedThisWeek = tasks.filter((t) => {
-    if (t.status !== "completed" || !t.completed_at) return false;
-    const completedDate = new Date(t.completed_at);
+    if (t.status !== "completed" || !t.completed_on) return false;
+    const completedDate = new Date(t.completed_on);
     return completedDate >= weekAgo;
   }).length;
 
   const completedThisMonth = tasks.filter((t) => {
-    if (t.status !== "completed" || !t.completed_at) return false;
-    const completedDate = new Date(t.completed_at);
+    if (t.status !== "completed" || !t.completed_on) return false;
+    const completedDate = new Date(t.completed_on);
     return completedDate >= monthAgo;
   }).length;
 
@@ -89,7 +89,7 @@ export function calculateAnalytics(tasks: Task[]): AnalyticsMetrics {
   const statusBreakdown = {
     dump: tasks.filter((t) => t.status === "dump").length,
     scheduled: tasks.filter((t) => t.status === "scheduled").length,
-    inProgress: tasks.filter((t) => t.status === "in_progress").length,
+    in_progress: tasks.filter((t) => t.status === "in_progress").length,
     completed: tasks.filter((t) => t.status === "completed").length,
     cancelled: tasks.filter((t) => t.status === "cancelled").length,
     archived: tasks.filter((t) => t.status === "archived").length,
