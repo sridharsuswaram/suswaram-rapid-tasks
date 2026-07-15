@@ -4,58 +4,55 @@ import { motion } from "framer-motion";
 import { CalendarDays, Inbox, ListChecks, Settings } from "lucide-react";
 import { MenuShortcut } from "./menu-shortcut";
 
-const ICONS = [
-  { href: "/settings", icon: Settings, label: "Settings", angle: 150 },
-  { href: "/dump", icon: Inbox, label: "Task Dump", angle: 210 },
-  { href: "/calendar", icon: CalendarDays, label: "Date View", angle: 330 },
-  { href: "/today", icon: ListChecks, label: "Today", angle: 30 },
-];
-
-const ARC_RADIUS = 90;
-const CENTER_X = 192;
-const CENTER_Y = 120;
-
 export function IconsArcLayout() {
-  const calculatePosition = (angle: number) => {
-    const rad = (angle * Math.PI) / 180;
-    const x = ARC_RADIUS * Math.cos(rad);
-    const y = ARC_RADIUS * Math.sin(rad);
-    return {
-      left: CENTER_X + x,
-      top: CENTER_Y + y,
-    };
-  };
+  const icons = [
+    { href: "/settings", icon: Settings, label: "Settings", delay: 0 },
+    { href: "/dump", icon: Inbox, label: "Task Dump", delay: 0.1 },
+    { href: "/calendar", icon: CalendarDays, label: "Date View", delay: 0.2 },
+    { href: "/today", icon: ListChecks, label: "Today", delay: 0.3 },
+  ];
 
   return (
-    <div className="relative w-full h-64">
-      {ICONS.map((item, idx) => {
-        const pos = calculatePosition(item.angle);
+    <div className="flex flex-col items-center gap-6 mt-4">
+      {/* Top row - 2 icons */}
+      <div className="flex gap-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: icons[0].delay, duration: 0.4 }}
+          whileHover={{ scale: 1.1 }}
+        >
+          <MenuShortcut {...icons[0]} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: icons[3].delay, duration: 0.4 }}
+          whileHover={{ scale: 1.1 }}
+        >
+          <MenuShortcut {...icons[3]} />
+        </motion.div>
+      </div>
 
-        return (
-          <motion.div
-            key={item.label}
-            className="absolute"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              delay: idx * 0.1,
-              duration: 0.4,
-              ease: "easeOut",
-            }}
-            style={{
-              left: `${pos.left}px`,
-              top: `${pos.top}px`,
-              transform: "translate(-50%, -50%)",
-            }}
-            whileHover={{
-              scale: 1.15,
-              transition: { duration: 0.2 },
-            }}
-          >
-            <MenuShortcut href={item.href} icon={item.icon} label={item.label} />
-          </motion.div>
-        );
-      })}
+      {/* Bottom row - 2 icons */}
+      <div className="flex gap-8">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: icons[1].delay, duration: 0.4 }}
+          whileHover={{ scale: 1.1 }}
+        >
+          <MenuShortcut {...icons[1]} />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: icons[2].delay, duration: 0.4 }}
+          whileHover={{ scale: 1.1 }}
+        >
+          <MenuShortcut {...icons[2]} />
+        </motion.div>
+      </div>
     </div>
   );
 }
