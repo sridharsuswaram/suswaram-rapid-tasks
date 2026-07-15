@@ -8,6 +8,7 @@ import { IconsArcLayout } from "@/components/home/icons-arc-layout";
 import { LiveClock } from "@/components/home/live-clock";
 import { MicButton } from "@/components/home/mic-button";
 import { WaveformBars } from "@/components/home/waveform-bars";
+import { QuickTags } from "@/components/tasks/quick-tags";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ export default function HomePage() {
   const [savedTask, setSavedTask] = useState<Task | null>(null);
   const [manualText, setManualText] = useState("");
   const [saving, setSaving] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
   const wasRecording = useRef(false);
   const quote = useMemo(() => getQuoteOfTheDay(), []);
 
@@ -35,9 +37,10 @@ export default function HomePage() {
         // external hook's state), not deriving local render state.
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setSaving(true);
-        createDumpTask({ voice_transcript: text })
+        createDumpTask({ voice_transcript: text, tags })
           .then((task) => {
             setSavedTask(task);
+            setTags([]);
             toast.success("Task Saved Successfully");
             voice.reset();
           })
@@ -52,7 +55,10 @@ export default function HomePage() {
   }, [voice.isRecording]);
 
   function handleMicClick() {
-    if (!voice.isRecording) setSavedTask(null);
+    if (!voice.isRecording) {
+      setSavedTask(null);
+      setTags([]);
+    }
     voice.toggle();
   }
 
@@ -74,9 +80,10 @@ export default function HomePage() {
     if (!text) return;
     setSaving(true);
     try {
-      const task = await createDumpTask({ voice_transcript: text, source: "manual" });
+      const task = await createDumpTask({ voice_transcript: text, source: "manual", tags });
       setSavedTask(task);
       setManualText("");
+      setTags([]);
       toast.success("Task Saved Successfully");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Failed to save task");
@@ -118,6 +125,12 @@ export default function HomePage() {
 
         {voice.isRecording && voice.transcript && (
           <p className="max-w-md text-center text-sm text-muted-foreground">{voice.transcript}</p>
+        )}
+
+        {!voice.isRecording && voice.transcript && !savedTask && (
+          <div className="w-full max-w-md">
+            <QuickTags tags={tags} onTagsChange={setTags} />
+          </div>
         )}
 
         {voice.error && <p className="text-sm text-destructive">{voice.error}</p>}
