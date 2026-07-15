@@ -30,7 +30,7 @@ export default function AnalyticsPage() {
       <main className="flex min-h-dvh flex-col bg-background">
         <header className="flex h-14 items-center gap-3 px-4">
           <Link href="/" className="text-2xl hover:scale-110 transition-transform">
-            🔙
+            🏠
           </Link>
           <h1 className="text-lg font-semibold">Analytics</h1>
         </header>
@@ -46,7 +46,7 @@ export default function AnalyticsPage() {
       <main className="flex min-h-dvh flex-col bg-background">
         <header className="flex h-14 items-center gap-3 px-4">
           <Link href="/" className="text-2xl hover:scale-110 transition-transform">
-            🔙
+            🏠
           </Link>
           <h1 className="text-lg font-semibold">Analytics</h1>
         </header>
@@ -70,7 +70,7 @@ export default function AnalyticsPage() {
     <main className="flex min-h-dvh flex-col bg-background">
       <header className="flex h-14 shrink-0 items-center gap-3 px-4">
         <Link href="/" className="text-2xl hover:scale-110 transition-transform">
-          🔙
+          🏠
         </Link>
         <h1 className="text-lg font-semibold">Analytics</h1>
       </header>
