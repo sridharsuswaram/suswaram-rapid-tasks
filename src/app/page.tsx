@@ -1,12 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, Inbox, ListChecks, Settings } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
+import { IconsArcLayout } from "@/components/home/icons-arc-layout";
 import { LiveClock } from "@/components/home/live-clock";
-import { MenuShortcut } from "@/components/home/menu-shortcut";
 import { MicButton } from "@/components/home/mic-button";
 import { WaveformBars } from "@/components/home/waveform-bars";
 import { Logo } from "@/components/logo";
@@ -94,39 +93,13 @@ export default function HomePage() {
       <div className="flex flex-1 flex-col items-center justify-center gap-8 px-6 pb-16">
         <LiveClock />
 
-        <div className="relative flex flex-col items-center gap-6">
+        <div className="relative flex flex-col items-center gap-2">
           <MicButton
             isRecording={voice.isRecording}
             onClick={handleMicClick}
             disabled={saving}
           />
-
-          <div className="flex items-center justify-center gap-4">
-            <MenuShortcut
-              href="/settings"
-              icon={Settings}
-              label="Settings"
-              className="transform -translate-x-2 -translate-y-1"
-            />
-            <MenuShortcut
-              href="/dump"
-              icon={Inbox}
-              label="Task Dump"
-              className="transform -translate-y-2"
-            />
-            <MenuShortcut
-              href="/today"
-              icon={ListChecks}
-              label="Today"
-              className="transform -translate-y-2"
-            />
-            <MenuShortcut
-              href="/calendar"
-              icon={CalendarDays}
-              label="Date View"
-              className="transform translate-x-2 -translate-y-1"
-            />
-          </div>
+          <IconsArcLayout />
         </div>
 
         <div className="flex h-8 flex-col items-center justify-center">
