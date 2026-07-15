@@ -9,7 +9,7 @@ export function IconsArcLayout() {
     { href: "/dump", emoji: "🧸", label: "Brain Dump" },
     { href: "/today", emoji: "🐇", label: "Today" },
     { href: "/calendar", emoji: "🕊️", label: "Ahead" },
-    { href: "/analytics", emoji: "🧠", label: "Insights" },
+    { href: "/analytics", emoji: "💡", label: "Insights" },
   ];
 
   return (
