@@ -6,10 +6,10 @@ import { MenuShortcut } from "./menu-shortcut";
 
 export function IconsArcLayout() {
   const icons = [
-    { href: "/settings", icon: Settings, label: "Settings", color: "text-blue-600 dark:text-blue-400" },
-    { href: "/dump", icon: Inbox, label: "Task Dump", color: "text-purple-600 dark:text-purple-400" },
-    { href: "/today", icon: ListChecks, label: "Today", color: "text-green-600 dark:text-green-400" },
-    { href: "/calendar", icon: CalendarDays, label: "Date View", color: "text-amber-600 dark:text-amber-400" },
+    { href: "/settings", icon: Settings, label: "Settings", color: "#2563eb" },
+    { href: "/dump", icon: Inbox, label: "Task Dump", color: "#9333ea" },
+    { href: "/today", icon: ListChecks, label: "Today", color: "#16a34a" },
+    { href: "/calendar", icon: CalendarDays, label: "Date View", color: "#d97706" },
   ];
 
   return (

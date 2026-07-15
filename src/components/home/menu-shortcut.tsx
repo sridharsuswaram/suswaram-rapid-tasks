@@ -22,7 +22,7 @@ export function MenuShortcut({ href, icon: Icon, label, className, color }: Menu
         className
       )}
     >
-      <span className={cn("neu-raised-sm flex size-13 items-center justify-center rounded-full bg-background", color || "text-primary")}>
+      <span className="neu-raised-sm flex size-13 items-center justify-center rounded-full bg-background" style={{ color: color || "currentColor" }}>
         <Icon className="size-5" />
       </span>
       <span className="text-xs font-medium text-muted-foreground">{label}</span>
