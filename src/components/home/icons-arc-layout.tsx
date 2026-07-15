@@ -14,7 +14,7 @@ export function IconsArcLayout() {
 
   return (
     <motion.div
-      className="flex gap-4 mt-6"
+      className="flex gap-4 mt-6 flex-nowrap justify-center items-center"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
