@@ -6,10 +6,10 @@ import { MenuShortcut } from "./menu-shortcut";
 
 export function IconsArcLayout() {
   const icons = [
-    { href: "/settings", icon: Settings, label: "Settings" },
-    { href: "/dump", icon: Inbox, label: "Task Dump" },
-    { href: "/today", icon: ListChecks, label: "Today" },
-    { href: "/calendar", icon: CalendarDays, label: "Date View" },
+    { href: "/settings", icon: Settings, label: "Settings", color: "text-blue-600 dark:text-blue-400" },
+    { href: "/dump", icon: Inbox, label: "Task Dump", color: "text-purple-600 dark:text-purple-400" },
+    { href: "/today", icon: ListChecks, label: "Today", color: "text-green-600 dark:text-green-400" },
+    { href: "/calendar", icon: CalendarDays, label: "Date View", color: "text-amber-600 dark:text-amber-400" },
   ];
 
   return (
@@ -27,7 +27,7 @@ export function IconsArcLayout() {
           transition={{ delay: idx * 0.05, duration: 0.3 }}
           whileHover={{ scale: 1.1 }}
         >
-          <MenuShortcut href={item.href} icon={item.icon} label={item.label} />
+          <MenuShortcut href={item.href} icon={item.icon} label={item.label} color={item.color} />
         </motion.div>
       ))}
     </motion.div>

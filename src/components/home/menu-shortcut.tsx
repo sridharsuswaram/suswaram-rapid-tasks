@@ -9,9 +9,10 @@ interface MenuShortcutProps {
   icon: LucideIcon;
   label: string;
   className?: string;
+  color?: string;
 }
 
-export function MenuShortcut({ href, icon: Icon, label, className }: MenuShortcutProps) {
+export function MenuShortcut({ href, icon: Icon, label, className, color }: MenuShortcutProps) {
   return (
     <Link
       href={href}
@@ -21,7 +22,7 @@ export function MenuShortcut({ href, icon: Icon, label, className }: MenuShortcu
         className
       )}
     >
-      <span className="neu-raised-sm flex size-13 items-center justify-center rounded-full bg-background text-primary">
+      <span className={cn("neu-raised-sm flex size-13 items-center justify-center rounded-full bg-background", color || "text-primary")}>
         <Icon className="size-5" />
       </span>
       <span className="text-xs font-medium text-muted-foreground">{label}</span>
