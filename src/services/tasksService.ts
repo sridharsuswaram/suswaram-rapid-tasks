@@ -58,6 +58,7 @@ export async function createDumpTask(input: {
   title?: string;
   voice_transcript: string;
   source?: TaskInsert["source"];
+  tags?: string[];
 }): Promise<Task> {
   const user_id = getUserId();
   const data = {
@@ -68,6 +69,7 @@ export async function createDumpTask(input: {
     source: input.source ?? "voice",
     status: "dump" as const,
     is_dump: true,
+    tags: input.tags ?? [],
   };
   const ref = await addDoc(tasksCollection, data);
   return { id: ref.id, ...data };

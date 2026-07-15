@@ -47,7 +47,9 @@ export interface Task {
 export type TaskInsert = Pick<Task, "title" | "voice_transcript"> &
   Partial<
     Omit<Task, "id" | "user_id" | "title" | "voice_transcript" | "created_at" | "updated_at">
-  >;
+  > & {
+    tags?: string[];
+  };
 
 export type TaskUpdate = Partial<
   Omit<Task, "id" | "user_id" | "created_at">
