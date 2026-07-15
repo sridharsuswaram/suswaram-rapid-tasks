@@ -28,7 +28,7 @@ export default function AnalyticsPage() {
   if (loading) {
     return (
       <main className="flex min-h-dvh flex-col bg-background">
-        <header className="flex h-14 items-center gap-3 px-4">
+        <header className="flex h-14 items-center gap-4 px-6">
           <Link href="/" className="text-2xl hover:scale-110 transition-transform">
             🏠
           </Link>
@@ -44,7 +44,7 @@ export default function AnalyticsPage() {
   if (!metrics) {
     return (
       <main className="flex min-h-dvh flex-col bg-background">
-        <header className="flex h-14 items-center gap-3 px-4">
+        <header className="flex h-14 items-center gap-4 px-6">
           <Link href="/" className="text-2xl hover:scale-110 transition-transform">
             🏠
           </Link>
