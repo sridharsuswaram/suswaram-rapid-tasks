@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, Flame, TrendingUp, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { calculateAnalytics, type AnalyticsMetrics } from "@/lib/analytics";
@@ -30,13 +29,13 @@ export default function AnalyticsPage() {
     return (
       <main className="flex min-h-dvh flex-col bg-background">
         <header className="flex h-14 items-center gap-3 px-4">
-          <Link href="/" className="rounded-lg p-2 hover:bg-card">
-            <ArrowLeft className="h-5 w-5" />
+          <Link href="/" className="text-2xl hover:scale-110 transition-transform">
+            🔙
           </Link>
           <h1 className="text-lg font-semibold">Analytics</h1>
         </header>
         <div className="flex flex-1 items-center justify-center">
-          <p className="text-muted-foreground">Loading analytics...</p>
+          <p className="text-muted-foreground">Loading...</p>
         </div>
       </main>
     );
@@ -46,32 +45,32 @@ export default function AnalyticsPage() {
     return (
       <main className="flex min-h-dvh flex-col bg-background">
         <header className="flex h-14 items-center gap-3 px-4">
-          <Link href="/" className="rounded-lg p-2 hover:bg-card">
-            <ArrowLeft className="h-5 w-5" />
+          <Link href="/" className="text-2xl hover:scale-110 transition-transform">
+            🔙
           </Link>
           <h1 className="text-lg font-semibold">Analytics</h1>
         </header>
         <div className="flex flex-1 items-center justify-center">
-          <p className="text-muted-foreground">No data available</p>
+          <p className="text-muted-foreground">No data</p>
         </div>
       </main>
     );
   }
 
   const statuses = [
-    { label: "Dump", value: metrics.statusBreakdown.dump, color: "#3b82f6" },
-    { label: "Scheduled", value: metrics.statusBreakdown.scheduled, color: "#a855f7" },
-    { label: "In Progress", value: metrics.statusBreakdown.in_progress, color: "#10b981" },
-    { label: "Completed", value: metrics.statusBreakdown.completed, color: "#34d399" },
-    { label: "Cancelled", value: metrics.statusBreakdown.cancelled, color: "#ef4444" },
-    { label: "Archived", value: metrics.statusBreakdown.archived, color: "#9ca3af" },
+    { label: "Dump", value: metrics.statusBreakdown.dump, emoji: "📦" },
+    { label: "Scheduled", value: metrics.statusBreakdown.scheduled, emoji: "🗓️" },
+    { label: "In Progress", value: metrics.statusBreakdown.in_progress, emoji: "⚡" },
+    { label: "Completed", value: metrics.statusBreakdown.completed, emoji: "✅" },
+    { label: "Cancelled", value: metrics.statusBreakdown.cancelled, emoji: "❌" },
+    { label: "Archived", value: metrics.statusBreakdown.archived, emoji: "📚" },
   ];
 
   return (
     <main className="flex min-h-dvh flex-col bg-background">
       <header className="flex h-14 shrink-0 items-center gap-3 px-4">
-        <Link href="/" className="rounded-lg p-2 hover:bg-card">
-          <ArrowLeft className="h-5 w-5" />
+        <Link href="/" className="text-2xl hover:scale-110 transition-transform">
+          🔙
         </Link>
         <h1 className="text-lg font-semibold">Analytics</h1>
       </header>
@@ -83,17 +82,17 @@ export default function AnalyticsPage() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
         >
-          <p className="text-sm text-muted-foreground mb-2">Completion Rate</p>
-          <div className="flex items-center justify-center gap-3">
-            <CheckCircle2 className="h-8 w-8 text-emerald-500" />
-            <p className="text-5xl font-bold">{metrics.completionRate}%</p>
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <span className="text-4xl">🎯</span>
+            <span className="text-4xl">Completion</span>
           </div>
+          <p className="text-5xl font-bold mt-4">{metrics.completionRate}%</p>
           <p className="text-xs text-muted-foreground mt-4">
-            {metrics.totalCompleted} of {metrics.totalTasks} tasks completed
+            {metrics.totalCompleted} of {metrics.totalTasks} tasks done ✨
           </p>
         </motion.div>
 
-        {/* Three Equal Metric Cards */}
+        {/* Three Metric Cards with Emoji */}
         <motion.div
           className="grid grid-cols-3 gap-3"
           initial={{ opacity: 0, y: 20 }}
@@ -101,59 +100,64 @@ export default function AnalyticsPage() {
           transition={{ delay: 0.1 }}
         >
           <div className="rounded-2xl bg-card p-4 neu-raised text-center">
+            <span className="text-3xl block mb-2">☀️</span>
             <p className="text-xs text-muted-foreground">Today</p>
-            <p className="mt-3 text-3xl font-bold text-blue-500">{metrics.completedToday}</p>
+            <p className="mt-2 text-2xl font-bold">{metrics.completedToday}</p>
           </div>
           <div className="rounded-2xl bg-card p-4 neu-raised text-center">
-            <p className="text-xs text-muted-foreground">This Week</p>
-            <p className="mt-3 text-3xl font-bold text-purple-500">{metrics.completedThisWeek}</p>
+            <span className="text-3xl block mb-2">📈</span>
+            <p className="text-xs text-muted-foreground">Week</p>
+            <p className="mt-2 text-2xl font-bold">{metrics.completedThisWeek}</p>
           </div>
           <div className="rounded-2xl bg-card p-4 neu-raised text-center">
-            <Flame className="h-5 w-5 text-orange-500 mx-auto mb-2" />
+            <span className="text-3xl block mb-2">🔥</span>
             <p className="text-xs text-muted-foreground">Streak</p>
-            <p className="mt-1 text-3xl font-bold text-orange-500">{metrics.currentStreak}</p>
+            <p className="mt-2 text-2xl font-bold">{metrics.currentStreak}</p>
           </div>
         </motion.div>
 
-        {/* Status Breakdown - Single Column List */}
+        {/* Status Breakdown with Emoji */}
         <motion.div
           className="rounded-2xl bg-card p-5 neu-raised"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-sm font-semibold mb-4">Tasks by Status</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-2xl">📊</span>
+            <h2 className="text-sm font-semibold">Tasks by Status</h2>
+          </div>
           <div className="space-y-3">
             {statuses.map((status) => (
-              <div key={status.label} className="flex items-center justify-between">
+              <div key={status.label} className="flex items-center justify-between p-2 rounded-lg hover:bg-background transition-colors">
                 <div className="flex items-center gap-3">
-                  <div
-                    className="h-3 w-3 rounded-full"
-                    style={{ backgroundColor: status.color }}
-                  />
-                  <span className="text-sm">{status.label}</span>
+                  <span className="text-2xl">{status.emoji}</span>
+                  <span className="text-sm font-medium">{status.label}</span>
                 </div>
-                <span className="font-semibold text-sm">{status.value}</span>
+                <span className="font-bold text-lg">{status.value}</span>
               </div>
             ))}
           </div>
         </motion.div>
 
-        {/* Summary Stats */}
+        {/* Summary Stats with Emoji */}
         <motion.div
           className="rounded-2xl bg-card p-5 neu-raised"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <h2 className="text-sm font-semibold mb-4">Summary</h2>
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-2xl">📋</span>
+            <h2 className="text-sm font-semibold">Summary</h2>
+          </div>
           <div className="space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Total Tasks</span>
+            <div className="flex justify-between text-sm p-2 rounded-lg hover:bg-background transition-colors">
+              <span className="text-muted-foreground">📌 Total Tasks</span>
               <span className="font-semibold">{metrics.totalTasks}</span>
             </div>
-            <div className="flex justify-between text-sm border-t border-border pt-3">
-              <span className="text-muted-foreground">This Month</span>
+            <div className="flex justify-between text-sm border-t border-border pt-3 p-2 rounded-lg hover:bg-background transition-colors">
+              <span className="text-muted-foreground">🌙 This Month</span>
               <span className="font-semibold">{metrics.completedThisMonth}</span>
             </div>
           </div>
