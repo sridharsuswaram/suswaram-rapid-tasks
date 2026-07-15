@@ -3,14 +3,15 @@
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useState } from "react";
+import { getTagColor } from "@/lib/tag-colors";
 
 const QUICK_TAG_PRESETS = [
-  { emoji: "💼", label: "work" },
-  { emoji: "🚨", label: "urgent" },
-  { emoji: "💡", label: "idea" },
-  { emoji: "👤", label: "personal" },
-  { emoji: "🎯", label: "goal" },
-  { emoji: "📚", label: "learning" },
+  { label: "work" },
+  { label: "urgent" },
+  { label: "idea" },
+  { label: "personal" },
+  { label: "goal" },
+  { label: "learning" },
 ];
 
 interface QuickTagsProps {
@@ -51,22 +52,28 @@ export function QuickTags({ tags, onTagsChange }: QuickTagsProps) {
 
       {/* Quick Tag Presets */}
       <div className="flex flex-wrap gap-2">
-        {QUICK_TAG_PRESETS.map((preset) => (
-          <motion.button
-            key={preset.label}
-            onClick={() => togglePresetTag(preset.label)}
-            className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition-all ${
-              tags.includes(preset.label)
-                ? "bg-blue-500 text-white"
-                : "bg-background text-muted-foreground hover:bg-background/80"
-            }`}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span>{preset.emoji}</span>
-            <span>{preset.label}</span>
-          </motion.button>
-        ))}
+        {QUICK_TAG_PRESETS.map((preset) => {
+          const colors = getTagColor(preset.label);
+          const isSelected = tags.includes(preset.label);
+          return (
+            <motion.button
+              key={preset.label}
+              onClick={() => togglePresetTag(preset.label)}
+              style={{
+                backgroundColor: isSelected ? colors.bg : "#f3f4f6",
+                color: isSelected ? colors.text : "#6b7280",
+                borderWidth: isSelected ? "2px" : "1px",
+                borderColor: isSelected ? colors.text : "#e5e7eb",
+              }}
+              className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm transition-all hover:opacity-80"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span>{colors.emoji}</span>
+              <span>{preset.label}</span>
+            </motion.button>
+          );
+        })}
       </div>
 
       {/* Custom Tag Input */}
@@ -90,24 +97,31 @@ export function QuickTags({ tags, onTagsChange }: QuickTagsProps) {
       {/* Selected Tags */}
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2 pt-2 border-t border-border">
-          {tags.map((tag) => (
-            <motion.div
-              key={tag}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="flex items-center gap-1.5 rounded-full bg-blue-500/20 px-3 py-1 text-sm text-blue-600 dark:text-blue-400"
-            >
-              <span>🏷️</span>
-              <span>{tag}</span>
-              <button
-                onClick={() => removeTag(tag)}
-                className="hover:text-blue-700 dark:hover:text-blue-300"
+          {tags.map((tag) => {
+            const colors = getTagColor(tag);
+            return (
+              <motion.div
+                key={tag}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                style={{
+                  backgroundColor: colors.bg,
+                  color: colors.text,
+                }}
+                className="flex items-center gap-1.5 rounded-full px-3 py-1 text-sm"
               >
-                <X className="h-3 w-3" />
-              </button>
-            </motion.div>
-          ))}
+                <span>{colors.emoji}</span>
+                <span>{tag}</span>
+                <button
+                  onClick={() => removeTag(tag)}
+                  className="hover:opacity-70 transition-opacity"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </motion.div>
+            );
+          })}
         </div>
       )}
     </motion.div>
