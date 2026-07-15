@@ -33,21 +33,23 @@ export default function HomePage() {
     if (wasRecording.current && !voice.isRecording) {
       const text = voice.transcript.trim();
       if (text) {
-        // Reacting to the recorder's isRecording flag flipping false (an
-        // external hook's state), not deriving local render state.
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setSaving(true);
-        createDumpTask({ voice_transcript: text, tags })
-          .then((task) => {
-            setSavedTask(task);
-            setTags([]);
-            toast.success("Task Saved Successfully");
-            voice.reset();
-          })
-          .catch((err) => {
-            toast.error(err instanceof Error ? err.message : "Failed to save task");
-          })
-          .finally(() => setSaving(false));
+        // Wait 3 seconds for user to add tags, then auto-save
+        const timeout = setTimeout(() => {
+          setSaving(true);
+          createDumpTask({ voice_transcript: text, tags })
+            .then((task) => {
+              setSavedTask(task);
+              setTags([]);
+              toast.success("Task Saved Successfully");
+              voice.reset();
+            })
+            .catch((err) => {
+              toast.error(err instanceof Error ? err.message : "Failed to save task");
+            })
+            .finally(() => setSaving(false));
+        }, 3000);
+
+        return () => clearTimeout(timeout);
       }
     }
     wasRecording.current = voice.isRecording;
