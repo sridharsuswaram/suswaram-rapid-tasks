@@ -91,40 +91,42 @@ export default function HomePage() {
         <Logo markClassName="h-6 w-auto" wordmarkClassName="text-lg" />
       </header>
 
-      <div className="flex flex-1 flex-col items-center justify-center gap-6 px-6 pb-16">
+      <div className="flex flex-1 flex-col items-center justify-center gap-8 px-6 pb-16">
         <LiveClock />
 
-        <div className="grid w-full max-w-[300px] grid-cols-3 grid-rows-3 items-center justify-items-center gap-3">
-          <MenuShortcut
-            href="/settings"
-            icon={Settings}
-            label="Settings"
-            className="col-start-1 row-start-1"
-          />
-          <MenuShortcut
-            href="/dump"
-            icon={Inbox}
-            label="Task Dump"
-            className="col-start-3 row-start-1"
-          />
+        <div className="relative flex flex-col items-center gap-6">
           <MicButton
             isRecording={voice.isRecording}
             onClick={handleMicClick}
             disabled={saving}
-            className="col-start-2 row-start-2"
           />
-          <MenuShortcut
-            href="/today"
-            icon={ListChecks}
-            label="Today"
-            className="col-start-1 row-start-3"
-          />
-          <MenuShortcut
-            href="/calendar"
-            icon={CalendarDays}
-            label="Date View"
-            className="col-start-3 row-start-3"
-          />
+
+          <div className="flex items-center justify-center gap-4">
+            <MenuShortcut
+              href="/settings"
+              icon={Settings}
+              label="Settings"
+              className="transform -translate-x-2 -translate-y-1"
+            />
+            <MenuShortcut
+              href="/dump"
+              icon={Inbox}
+              label="Task Dump"
+              className="transform -translate-y-2"
+            />
+            <MenuShortcut
+              href="/today"
+              icon={ListChecks}
+              label="Today"
+              className="transform -translate-y-2"
+            />
+            <MenuShortcut
+              href="/calendar"
+              icon={CalendarDays}
+              label="Date View"
+              className="transform translate-x-2 -translate-y-1"
+            />
+          </div>
         </div>
 
         <div className="flex h-8 flex-col items-center justify-center">
